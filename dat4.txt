@@ -1,0 +1,43 @@
+
+
+[#Menu: gateway of  tally]
+	Add: Item: "Day 4" : Menu : sample list
+	[Menu: sample list]
+		Item : "Welcome page" :Display: day4
+		Item : "Field modification" : Display: sample2
+	[Report: day4]
+		Form: day4
+		
+		[Form: day4]
+			Part: day4
+			[Part: day4]
+				Line: day4
+				[Line: day4]
+					Field: day4
+					[Field: day4]
+						Set as: "Welcome to Day 4          have a nice day"
+						Color: blue
+						
+    [Report: sample2]
+		[Form: sample2]
+			Part: sample2
+			[Part: sample2]
+				Line: sample2
+				[Line: sample2]
+					Field: modify,change	
+					[Field: change]
+						Set as: "Xyz"
+						Color: blue
+					[*Field: change]
+						Set as: "Changed"
+						Width: 50% page 
+						Background: Red
+					[Field: modify]
+						Set as: "ABC"
+						Color: red
+						Width: 50% page
+					[#Field: modify]
+						Color: red
+						Set as: "Modified"
+						Background: Green
+						

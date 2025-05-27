@@ -1,0 +1,28 @@
+[#Menu: Gateway of Tally]
+    Add: Item: Welcome Menu : Action
+
+[Menu: Welcome Menu]
+    Title     : "Welcome"
+    
+
+[Report: Welcome Report]
+    Form      : Welcome Form
+    Title     : "Welcome Message"
+
+[Form: Welcome Form]
+    Part      : Welcome Part
+    Height    : 3
+    Width     : 60
+    Background: Blue
+
+[Part: Welcome Part]
+    Line      : Welcome Line
+
+[Line: Welcome Line]
+    Field     : Welcome Field
+    Local     : Field: Welcome Field : Set As : "?? Welcome to Tally Customization!"
+
+[Field: Welcome Field]
+    Set As    : ""
+    Style     : Normal Bold
+    Align     : Center

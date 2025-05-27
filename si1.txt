@@ -1,0 +1,56 @@
+[#Menu: Gateway of tally]
+Add:Item:"User Defined report" :Display Collection	:	Stkcoll
+
+
+
+[Collection	:	Stkcoll]
+	
+	Title		:	"Select ledger"
+	Type		:	Ledger
+;	Child Of	:	$$GroupSundryDebtors
+	Belongs To	:	Yes
+	Variable	:	siu
+	Trigger		:	si1
+	Report		:	si1
+	Fetch		:	Name
+	Format		:	$Name , 30
+	Full Height	:	Yes
+
+[Report	:	si1]
+
+	Form	:	si1
+	Object	:	company
+
+[Form	:	si1]
+
+	Part	: 	si1
+
+[Part	:	si1]
+
+	Line	:	si1
+
+[Line	:	si1]
+
+	Field	: 	si1,si2
+
+[Field	:si1]
+
+	Use		:	Name Field
+	Storage	:	TSI
+	
+[Field	:si2]
+
+	Use		:	Name Field
+	Storage	:	siu
+		
+		
+	
+[System : UDF]
+	TSI: String: 30000
+	siu: String: 30001
+	
+
+[Variable	:	siu]
+[System		:	Variable]
+siu	:	airpods
+	

@@ -1,0 +1,85 @@
+
+
+[#Menu	:	Gateway of Tally]
+
+	Add	:	Item	:	Before	:	@@LOCQUIT	:	"Voucher Report"	:	Display	:	VoucherReport
+
+[Report	:	VoucherReport]
+	
+	Form	:	VoucherReport
+	
+[Form	:	VoucherReport]
+	
+	Part	:	VoucherReport
+	Width	:	100% Screen
+	Height	:	100% Screen
+	Space Left	:	1% Screen
+	Space Right	:	1% Screen
+
+[Part	:	VoucherReport]
+	
+	Line	:	VoucherReportTitle , VoucherReportDetails
+	Repeat	:	VoucherReportDetails :	GetErp_VchColl
+	Scroll	:	Vertical	
+	Border	:	Thin  Box
+	Common Border	:	Yes
+
+[Line	:	VoucherReportTitle]
+	
+	Use		:	VoucherReportDetails
+	
+	Local	:	Field	:	Default				:	Type	:	String	
+	
+	Local	:	Field	:	Geterp_Vouchernumber	:	Set as	:	"invoice number"
+	Local	:	Field	:	Geterp_vchDate			:	Set as	:	"Date"
+	Local	:	Field	:	GetErp_voucherType		:	Set as	:	"Voucher type"
+	Local	: 	Field	:	Geterp_partyName		: 	Set as	:	"party name"
+	Local	:	Field	:	Geterp_Amount			:	Set as	:	"Amount"
+	
+	Border	:	Thin Bottom
+	
+[Line	:	VoucherReportDetails]
+	
+	Field	:	Geterp_Vouchernumber , 	Geterp_vchDate , GetErp_voucherType , Geterp_partyName , Geterp_Amount
+
+	Space Bottom	:	0.5% Screen	
+
+	[Field	:	Geterp_Vouchernumber]
+	Use		:	Name Field
+	Set as	:	$VOUCHERNUMBER
+	Width	:	10% Screen 
+	Align	:	Center
+	Border	:	Thin right
+
+	[Field	:	Geterp_vchDate]
+	Use		:	Uni Date Field
+	Set as	:	$DATE
+	Width	:	20% Screen 
+	Align	:	Center
+	Border	:	Thin right
+		
+	[Field	:	GetErp_voucherType]
+	Use		:	Name Field
+	Set as	:	$VOUCHERTYPENAME
+	Align	:	Center
+	Width	:	20% Screen 
+	Border	:	Thin right
+
+	[Field	:	Geterp_partyName]	
+	Use		:	Name Field
+	Set as	:	$LEDGERNAME
+	Width	:	20% Screen 
+	Align	:	Center
+	Border	:	Thin right
+
+	[Field	:	Geterp_Amount]			
+	Use		:	Amount Field
+	Set as	:	$AMOUNT
+	Width	:	20% Screen 
+	Align	:	Center
+			
+					
+[Collection	:	GetErp_VchColl]
+	
+	Type	:	Voucher
+	Fetch	:	VOUCHERTYPENAME , LEDGERNAME , VOUCHERNUMBER , DATE , AMOUNT

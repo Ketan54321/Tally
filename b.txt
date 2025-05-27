@@ -1,0 +1,40 @@
+[#Menu: gate way of tally]
+	Add: Item: "part" :Display: test
+	[Report: test]
+		Form: test
+		[Form: test]
+			Part: test1, test2
+			[Part: test1]
+				Part: left, right
+				[Part: left]
+					Width: 50% page
+					Height: 50% page
+					Line: left
+					Background: blue
+					[Line: left]
+						Field: left
+						[Field: left]
+							Set as: "part1 left"
+							Color: red
+							Style: Large Serif Bold
+							
+								
+				 [Part: right]
+					Width: 50% page
+					Height: 50% page
+					Line: right
+					Background: red
+					[Line: right]
+						Field: right
+						[Field: right]
+							Set as: "part1 right"
+			[Part: test2]
+				Line: test2
+				Width: 100% page
+				Height: 50% page
+				Background: yellow
+				[Line: test2]
+					Field: test2
+					[Field: test2]
+						Set as:"part 2"
+			

@@ -1,0 +1,61 @@
+[#Menu: Gateway of Tally]
+	Item: "Ledger" : Display: si
+	
+[Report: led]
+	Form	: led
+	Object	: Ledger : ##TriggeredLedger
+	[Form: led]
+		Part	: led
+		Width	: 80% page
+		Height	: 80% page
+		
+		[Part: led]
+			Line: name, Under, bill, Address, State, pincode, bank, Registation type, open balance
+			
+			[Line: name]
+					Use  : demo
+					Local: Field:Info Field: Info: Ledger name 
+					Local: Field:  Name Title Field:Set as: $Name
+			[Line: Under]
+				    Use	 : demo
+					Local: Field:Info Field: Info: Under 
+					Local: Field:  Name Title Field:Set as: $Parent
+			[Line: bill]
+					Use  : demo
+					Local: Field:Info Field: Info: Bill maintained 
+					Local: Field:  Name Title Field:Set as: $ISBILLWISEON
+			[Line: Address]
+				    Use  : demo
+					Local: Field:Info Field: Info: Address 
+					Local: Field:  Name Title Field:Set as: $address
+			[Line: State]
+					Use	 : demo
+					Local: Field:Info Field: Info: State 
+					Local: Field:  Name Title Field:Set as: $PRIORSTATENAME
+			[Line: pincode]
+				    Use  : demo
+					Local: Field:Info Field: Info: pincode 
+					Local: Field:  Name Title Field:Set as: $Pincode
+			[Line: bank]
+					Use  : demo
+					Local: Field:Info Field: Info: bank
+					Local: Field:  Name Title Field:Set as: $USEASNOTIONALBANK
+			[Line: Registation type]
+					Use	 : demo
+					Local: Field:Info Field: Info: Registation type 
+					Local: Field:  Name Title Field:Set as: $VATDEALERTYPE	
+			[Line: open balance]
+					Use	 : demo
+					Local: Field:Info Field: Info: open balance
+					Local: Field:  Name Title Field:Set as: $OPENINGBALANCE
+					
+
+			[Line: demo]
+				Field	: Info Field, Name Title Field
+				Local	: Field:  Info Field 		: Width : 40% screen
+				Local	: Field:  Info Field 		: Style	: Normal bold
+				Local	: Field:  Info Field 		: Align : Center
+				Local	: Field:  Name Title Field	: Width : 40% screen
+				Local	: Field:  Name Title Field	: Style	: Bold Italic
+				Local	: Field:  Name Title Field	: Align : Center
+				Border	: thin bottom

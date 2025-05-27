@@ -1,0 +1,56 @@
+[#Menu: Gateway of Tally]
+	Item: "Stock Item" : Display: si
+	
+[Report: si]
+	Form: si
+	Object: Stock Item : ##TriggeredStockitem
+	[Form: si]
+		Part: si
+		
+		[Part: si]
+			Line: name, hsn, unit, mfgdate, mfgdate, itax, ctax, stax, pb, tb
+			
+			[Line: name]
+					Use: def
+					Local: Field:Info Field: Info: "stock item :"
+					Local: Field:  Name Title Field:Set as: $Name
+			[Line: hsn]
+				Use: def
+					Local: Field:Info Field: Info: HSN code :
+					Local: Field:  Name Title Field:Set as: $_HSNCode
+			[Line: unit]
+					Use: def
+					Local: Field:Info Field: Info: "No of units :"
+					Local: Field:  Name Title Field:Set as: $baseunits
+			[Line: mfgdate]
+				Use: def
+					Local: Field:Info Field: Info: Manufacture date :
+					Local: Field:  Name Title Field:Set as: $hasmfgdate
+			[Line: itax]
+					Use: def
+					Local: Field:Info Field: Info: "i tax :"
+					Local: Field:  Name Title Field:Set as: $_IntigratedTax
+			[Line: ctax]
+				Use: def
+					Local: Field:Info Field: Info: c tax :
+					Local: Field:  Name Title Field:Set as: $_CentralTax
+			[Line: stax]
+					Use: def
+					Local: Field:Info Field: Info: "s tax:"
+					Local: Field:  Name Title Field:Set as: $_StateTax
+			[Line: pb]
+				Use: def
+					Local: Field:Info Field: Info: last year balance :
+					Local: Field:  Name Title Field:Set as: $_PrevYearBalance	
+			[Line: tb]
+					Use: def
+					Local: Field:Info Field: Info: "this year balance :"
+					Local: Field:  Name Title Field:Set as: $_ThisYearBalance
+					
+
+			[Line: def]
+				Field: Info Field, Name Title Field
+				Local: Field:  Info Field : Width : 15% screen
+				Local: Field:  Info Field : Style: Normal bold
+				Local: Field:  Name Title Field: Width : 15% screen
+				Local: Field:  Name Title Field: Style:  Large Serif Bold Italic

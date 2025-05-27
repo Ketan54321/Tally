@@ -1,0 +1,43 @@
+[Include	:	ass1.txt]
+
+
+[#Menu	:	Gateway Of Tally]
+
+	Item	:	"Display collection"	:	Display Collection	:	Display collection
+
+[Collection	:	Display collection]
+	
+	Type	:	Stockitem
+	Variable:	TriggeredStockitem
+	Trigger	:	Triggercollection
+	Report	:	si
+	Fetch	:	Name
+
+[Report	:	Triggercollection]
+
+Form	:	Triggercollection
+
+[Form	:	Triggercollection]
+	
+Part	:	Triggercollection
+
+[Part	:	Triggercollection]
+	
+Line	:	Triggercollection
+
+[Line	:	Triggercollection]
+	
+Field	:	Triggercollection
+	
+[Field	:	Triggercollection]
+	
+Use			:	Name Field
+Table		:	Stockitem
+Set Always	:	Yes
+Modifies	:	TriggeredStockitem 
+
+
+[Variable	:	TriggeredStockitem]
+[System		:	Variable]
+TriggeredStockitem	:	""	
+	

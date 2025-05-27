@@ -1,0 +1,13 @@
+
+
+[Report: field modifier]
+	Form: day4.1
+		[Form: day4.1]
+			Part: day4
+			[Part: day4]
+				Line: day4
+				[Line: day4]
+					Field: day4
+					[Field: day4]
+						Set as: "Anoter page"
+						

@@ -1,0 +1,72 @@
+[#Menu: gateway of tally]
+	Add: Item: "Day6" :Display: date
+	[Report: date]
+		Form: date
+		Variable: num
+		
+		[Variable: num]
+			Type: Number
+			Persist: 1
+		[Form: date]
+			Part: date
+			Button 		: Change Color
+	Height		: 100% Page
+	Width		: 100% Page
+
+	Switch		: Color	: Yellow HelloWorld : ##ChangeColor = Yellow
+	Switch		: Color	: Green HelloWorld 	: ##ChangeColor = Green
+	[!Form: Yellow HelloWorld]
+	
+		Background		: Light Lily Yellow
+
+	[!Form: Green HelloWorld]
+
+		Background		: Pale Sea Green
+			[Part: date]
+				Part:part1,part2,part3
+				[Part: part1]
+					Line: part1
+					Width: 30% page
+					Height: 20% page
+					Background: green
+					[Line: part1]
+						Field: part1
+						[Field: part1]
+							Set as: machinedate
+				[Part: part2]
+					Line: part2
+					Width: 30% page
+					Height: 20% page
+					Background: blue
+					
+					[Line: part2]
+						Field: part2
+						[Field: part2]
+							Set as: $$CurrentDate
+				[Part: part3]
+					Line: part3
+					Width: 30% page
+					Height: 20% page
+					Background: yellow
+					 
+					[Line: part3]
+						Field: part3
+						[Field: part3]
+							Set as: "Hiiii"
+							
+							[Button: Change Color]
+
+	Key 	: Alt + R
+	Action 	: Set	: Change Color	: if ##ChangeColor = "Green" then "Yellow" else "Green"
+	Title	: if ##ChangeColor = "Green" then "Yellow" else "Green"
+	
+[Variable: Change Color]
+
+	Type 		: String
+	Persistent	: Yes
+
+[System: Variable]
+
+	Change Color: Green
+
+		

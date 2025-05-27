@@ -1,0 +1,30 @@
+[#Menu: Gateway of tally]
+Add:Item:"User Defined report" : Alter: user def rep
+
+
+[Report	:	user def rep]
+
+	Form	:	user def rep
+	Object	:	company
+
+[Form	:	user def rep]
+
+	Part	: 	user def rep
+
+[Part	:	user def rep]
+
+	Line	:	user def rep
+
+[Line	:	user def rep]
+
+	Field	: 	user def rep
+
+[Field	: user def rep]
+
+	Use		:	Name Field
+	Storage	:	ReportTitle
+		
+	
+[System : UDF]
+	ReportTitle: String: 30000
+	

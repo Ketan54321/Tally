@@ -1,0 +1,101 @@
+[#Menu	: 	Gateway of tally]
+	Add	: Item	: Before	:	@@LOCQUIT	:"purchase details" : Display: Purchase
+
+
+[Report	:	Purchase]
+	Form		:	Purchase
+	
+[Form	: 	Purchase]
+	Part		: 	Purchase
+	Space Left	: 	1% screen
+	Space Right	:	1% screen
+		
+		
+[Part	:	Purchase]
+	Line			: title, repeat
+	Repeat			: repeat : getErp_Purchase2
+	Border			: thin box
+	Scroll			: Vertical
+	Common Border	: yes
+					
+[Line	:	title]
+	Use		: repeat
+	Local	: Field: default				: Type	: String
+	Local	: Field: default				: Style	: Normal bold
+	Local	: Field: getErp_name 			: Set as: "Party name"
+	Local	: Field: getErp_voucherNumber  	: Set as: "Voucher number"
+	Local	: Field: getErp_voucherDate		: Set as: "voucher date"
+	Local	: Field: getErp_ItemName		: Set as: "Item name"
+	Local	: Field: getErp_quantity		: Set as: "quantity"
+	Local	: Field: getErp_rate			: Set as: "rate"
+	Local	: Field: getErp_Amount			: Set as: "Amount"
+	
+	Border	: thin bottom
+		
+
+[Line	:	repeat]
+	Local	: 	Field: default				: Style	: Normal
+	Field	: 	getErp_name  , getErp_voucherNumber , getErp_voucherDate , getErp_ItemName 
+	Field	: 	getErp_quantity , getErp_rate , getErp_Amount	
+	
+	[Field	: 	getErp_name]
+		Use		: 	Name field
+		Set as  :	$PARTYLEDGERNAME
+		Width	:	10% Screen 
+		Align	:	Center
+		Border	:	Thin right
+	[Field	: 	getErp_voucherNumber]
+		Use		: 	name field
+		Set as	: 	$VOUCHERNUMBER
+		Width	: 	10% screen
+		Align	: 	Center
+		Border	: 	thin right
+	[Field	: 	getErp_voucherDate]
+		Use		: 	uni date field
+		Set as	: 	$Date
+		Width	: 	10% screen
+		Align	: 	Center
+		Border	: 	thin right
+	[Field	: 	getErp_ItemName]
+		Use		: 	name field
+		Set as	: 	$STOCKITEMNAME
+		Width	: 	10% screen
+		Align	: 	Center
+		Border	: 	thin right
+	[Field	: 	getErp_quantity]
+		Use		: 	qtyfield
+		Set as	: 	$BILLEDQTY
+		Width	: 	10% screen
+		Align	: 	Center
+		Border	: 	thin right
+	[Field	: 	getErp_rate]
+		Use		:	rate field
+		Set as	: 	$RATE
+		Width	: 	10% screen
+		Align	: 	Center
+		Border	: 	thin right
+	[Field	: 	getErp_Amount]
+		Use		: 	amount field
+		Set as	: 	$AMOUNT
+		Width	: 	10% screen
+		Align	: 	Center
+		Border	: 	thin right
+		
+					
+[Collection	:	getErp_Purchase1]
+	Type		:	Vouchers	:	Vouchertype
+	Child Of	:	$$VchTypePurchase
+	Fetch		:	Vouchernumber , PartyLedgerName
+
+[Collection	: 	getErp_Purchase2] 
+	
+	Source Collection	:	getErp_Purchase1
+	Walk				:	ALLINVENTORYENTRIES
+	Compute				:	Vouchernumber		:	$.Vouchernumber	
+	Compute				:	PartyLedgerName		:	$.PartyLedgerName
+	Compute				:	Date				:	$.Date
+	Compute				:	Stockitemname		:	$Stockitemname
+	Compute				:	Billedqty			:	$Billedqty
+	Compute				:	Rate				:	$Rate
+	Compute				:	Amount				:	$Amount
+					

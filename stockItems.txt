@@ -1,0 +1,63 @@
+[#Menu: Gateway of tally]
+Add:Item:"List of stock item" : Alter: List of SI
+
+
+[Report	:	List of SI]
+
+	Form	:	List of SI
+	Object	:	company
+
+[Form	:	List of SI]
+
+	Part			: 	List of SI
+	Width			: 	50% page
+	Height			:	50% page
+	Vertical Align	: Top
+	
+
+[Part	:	List of SI]
+
+	Line	:	List of SI, listTable
+
+[Line	:	List of SI]
+
+	Field	: 	title,List of SI
+	
+[Field	:	title]
+	Info	:	"Stock item"
+
+[Field	: List of SI]
+	
+	Use		:	Name Field
+	Storage	:	List_Si	
+	
+[System : UDF]
+	List_Si: String: 30010
+	ERPStock_Group	:String:30020
+	
+[Line	:	listTable]
+	Field	: under ,listTable1
+
+[Field	:	under]
+	set as: under
+	Skip	: Yes
+	
+[Collection	:	stockGroupColl]
+	Title	: "stock Group list"
+	Type	:	stockgroup
+	Fetch	:	name
+	Format	:	$Name , 20
+	
+	
+[Field: listTable1]
+	
+	Use		:	Name Field
+	Storage	:	ERPStock_Group
+	Table	:	stockGroupColl
+	Show Table: Always
+	
+	
+
+	
+	
+	

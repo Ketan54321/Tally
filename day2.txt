@@ -1,0 +1,85 @@
+[#Menu : gate way of tally]
+	Add: Item: "day 2 sample" : Menu : sample list
+	[Menu: sample list]
+		Item : "sample" :Display: sample
+		Item : "sample1" : Display: sample2
+		
+	
+	[Report: sample]
+		
+		Form: sample
+		
+		 
+		[Form: sample]
+			
+			Width: 50% page
+			Height: 25% page
+			Background: red
+			Part: sample
+			[Part: sample]
+				
+				Line : sample
+				[Line : sample]
+					Field: sample
+					Height: 5
+					
+					[Field: sample]
+						Set as: "Welocme to the world of TDL"
+						Color: blue
+						Style: Small Serif Bold Italic
+						Border: Double Sub Column Titles
+		
+
+	[Report: sample2]
+		Form: sample2
+		[Form: sample2]
+			Part: sample2
+			[Part: sample2]
+				Line: sample2 , line2	
+				[Line: sample2]
+					Field: sample2 , sample2.1
+					[Field: sample2]
+						Set as: "welcome"
+						Use: sample
+						Delete: Border
+					[Field: sample2.1]
+						Set as: "Hellow"
+						Use: Medium prompt
+				[Line: line2]
+					Field: line2,line2.1,line2.2
+					[Field: line2]
+						Set as: "hiiiii"
+						Option: change color : $$InDisplayMode
+						[!Field: change color]
+							Color: blue
+					[Field:line2.1]
+						Set as:"123456"
+						Option: change  : 12<15
+						Option: change1 : 12>10
+						[!Field: change ]
+							Color: blue
+						[!Field: change1]
+							Color: red
+					[Field:line2.2]
+						Set as:"ABCD"
+						Switch: case1: c1 : 10<12
+						Switch: case1: c2 : 10<12
+						Switch: case1: c3 : 10<12
+						Switch: cas2: c21:10<12
+						[!Field: c1 ]
+							Color: blue
+						[!Field: c2]
+							Color: red
+						[!Field:c3]
+							Color: red
+						[!Field:c21]
+							Color: grey
+						
+						
+						
+						
+
+	
+						 
+						
+						

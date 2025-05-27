@@ -1,0 +1,185 @@
+[#Menu: Gateway of tally]
+	
+	Add				: Item	: "Contact Details"	: Alter	: contact
+	
+[Report	:	contact]
+	
+	Form			: contact
+	Object			: company
+
+[Form	:	contact]
+	
+	Part		 	: contact
+	Width		 	: 33% screen
+	Height		 	: 25% screen
+	
+	
+	
+[Part	:	contact]
+	
+	Line			: KC_Title,	 KC_Name,	KC_Pno,	 KC_Mno,	KC_FaxNo,	KC_email,	KC_cc, 	KC_website 
+	Space Left		: 5% page
+	
+[Line	:	KC_Title]
+	
+	Field			:	KC_Title
+	Height			:	2
+	
+	
+[Field	:	KC_Title]
+	
+	Set as			:	"Contact Details"
+	Skip			:	Yes
+	Width			:	100% page
+	Align			:	Center
+	Style			: 	Normal bold
+	
+	
+[Line	:	KC_Name]
+	
+	Field			:	Name_field1,	Name_field2
+	
+[Field	:	Name_field1]
+	
+	Set as			:	"Contact name"
+	Use				:	KC_left
+	
+[Field	:	Name_field2]
+	
+	Storage			:	KC_name
+	Use				:	KC_right
+	
+			
+[Line	:	KC_Pno]
+	
+	Field			:	Pno_field1,	Pno_field2
+	
+[Field	:	Pno_field1]
+	
+	Set as			:	"Phone no"
+	Use				:	KC_left
+	
+[Field	:	Pno_field2]
+	
+	Storage			:	KC_Pno
+	Use				:	KC_right
+	Type			:	Number
+	Format			:	"nocomma"
+
+[Line	:	KC_Mno]
+	
+	Field			:	Mno_field1,	Mno_field2,Mno_field3
+	
+[Field	:	Mno_field1]
+	
+	Set as			:	"Primary Mobile No"
+	Use				:	KC_left
+	
+[Field	:	Mno_field2]
+	
+	Set as			:	"+91-"
+	Table			:	CountryCode
+	Show Table		:	Always
+	Width			:	10% page
+	Style			:	Normal bold
+	
+[Collection	:	CountryCode]
+	
+	Title			: "country_code"
+	Type			:	List of country codes
+	Fetch			:	name	
+	Format			:	$Name , 20
+	
+	
+[Field	:	Mno_field3]
+	
+	Storage			:	KC_Mno
+	Width			: 	35% page
+	Use				:	KC_right
+	Type			:	Number
+	Format			:	"nocomma"
+
+[Line	:	KC_FaxNo]
+	
+	Field			:	FaxNo_field1,	FaxNo_field2
+	
+[Field	:	FaxNo_field1]
+	
+	Set as			:	"Fax no"
+	Use				:	KC_left
+	
+[Field	:	FaxNo_field2]
+	
+	Storage			:	KC_faxNo
+	Use				:	KC_right
+	Type			:	Number
+    Format			:	"nocomma"
+
+[Line	:	KC_email]
+	
+	Field			:	Email_field1,	Email_field2
+	
+[Field	:	Email_field1]
+	
+	Set as			:	"E-mail"
+	Use				:	KC_left
+	
+[Field	:	Email_field2]
+	
+	Storage			:	KC_Email
+	Use				:	KC_right
+	
+
+[Line	:	KC_cc]
+	
+	Field			:	CC_field1,	CC_field2
+	
+[Field	:	CC_field1]
+	
+	Set as			:	"CC to (if any)"
+	Use				:	KC_left
+	
+[Field	:	CC_field2]
+	
+	Storage			:	KC_CC
+	Use				:	KC_right
+	
+	
+
+[Line	:	KC_website]
+	
+	Field			:	Website_field1,	Website_field2
+	
+[Field	:	Website_field1]
+	
+	Set as			:	"website"
+	Use				:	KC_left
+	
+[Field	:	Website_field2]
+	
+	Storage			:	KC_Website
+	Use				:	KC_right
+	
+	
+
+
+
+[Field	:	KC_left]
+	Skip			:	Yes
+	Width			: 	45% page
+	
+[Field	:	KC_right]
+	Width			:	40% page
+	Maximum			:	15
+	
+
+[System : UDF]
+	KC_Website		: String: 30001
+	KC_CC			: String: 30002
+	KC_Email		: String: 30003
+	KC_faxNo		: Number: 30004
+	KC_Mno			: Number: 30005
+	KC_Pno			: Number: 30006
+	KC_name			: String: 30007
+	
+	

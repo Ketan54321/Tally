@@ -1,0 +1,63 @@
+
+[Include	:	ledger.txt]
+
+
+[#Menu	:	Gateway Of Tally]
+
+	Item	:	"Display collection"	:	Display Collection	:	Display collection
+
+[Collection	:	Display collection]
+	
+	Title		:	"Select ledger"
+	Type		:	Ledger
+;	Child Of	:	$$GroupSundryDebtors
+	Belongs To	:	Yes
+	Variable	:	TriggeredLedger
+	Trigger		:	Triggercollection
+	Report		:	Triggercollection
+	Fetch		:	Name
+	Format		:	$Name , 30
+	Full Height	:	Yes
+
+[Report	:	Triggercollection]
+
+Form	:	Triggercollection
+
+[Form	:	Triggercollection]
+	
+Part	:	Triggercollection
+
+[Part	:	Triggercollection]
+	
+Line	:	Triggercollection
+
+[Line	:	Triggercollection]
+	
+Field	:	Triggercollection
+	
+[Field	:	Triggercollection]
+	
+Use			:	Name Field
+Table		:	Display collection
+Set Always	:	Yes
+Modifies	:	TriggeredLedger
+Show Table	:	Always
+
+
+[Variable	:	TriggeredLedger]
+[System		:	Variable]
+TriggeredLedger	:	Abishek	
+
+
+[Collection	:	Stkcoll]
+	
+	Title		: 	"List of stockitem"
+	Sub Title	:	"Stockitemname",  "Parent"
+	Type		:	Stockitem
+	Fetch		:	name
+	Format		:	$Name , 30
+	Format		:	$Parent , 20
+	Align		:   Right
+	Full Height	: 	Yes
+	
+	

@@ -1,0 +1,62 @@
+[#Line: EI DueDate]
+
+		Fields      : Medium Prompt, EI DueDate
+		Local       : Field : Medium Prompt : Info : $$LocaleString:"Mode/Terms of Payment"
+
+[#Line: EI OrderRef]
+
+		Left Fields : Medium Prompt, EI OrderRef
+		Local 		: Field : Medium Prompt : Info : $$LocaleString:"Other References"
+		
+[#Part: EXPINV TopRight]
+
+	Parts       : EXPINV BasicInfo, EXPINV Terms, JMInOutInv NatureofProcess
+	;Delete: Parts: EXPINV BasicInfo,
+	
+
+      [#Part: EXPINV BasicRight]
+
+                Parts       : EXPINV Date, EXPINV DueDate, EXPINV OtherRef, EXPINV OrderDate, +
+                              EXPINV ShipDate, EXPINV Destination, JWInOutInv MotorVehicleNo, +
+							  EXPINV PlaceOfRcpt, EXPINV PortDischarge, JMInOutInv ProcessingDuration
+				Option: KJdeleterotherRef :@@Issales
+;				
+
+		[!Part: KJdeleterotherRef]
+		Delete: Parts: EXPINV OtherRef,
+		
+			[#Part: EXPINV DueDate]
+
+                    Lines       : EXPINV SubTitle
+                    BottomLines : EXPINV DueDate
+                    Local       : Field : EXPINV SubTitle : Info    : $$LocaleString:"Mode/Terms of Payment"
+                    Local       : Field : EXPINV SubTitle : Width   : (If @@IsGSTPDFExportInvWithItem Then 24.6% Else 25%) Page
+                    Local       : Field : EXPINV SubTitle : Inactive: NOT @@OrderTerms
+					Local       : Field : EXPINV SubTitle : Cells   : @@ExcelCellColumn - 3 * ($$Quotient:@@ExcelCellColumn:4)
+                    Height      : 9 mms
+                    Border      : Full Thin Bottom
+                    Invisible   : (@@IsSales AND (NOT @@EcoOrderTerms AND NOT @@EcoDespatchDet)) OR (NOT @@IsSales AND NOT @@EcoOrderTerms)
+                    Option      : GST EXPINV BasicLeft : @@IsGSTOnAppl AND @@IsGSTTaxAnalysisWithItems
+					Option		: 	newotherref : @@issales
+
+
+[!Part: newotherref]
+	Delete:  BottomLines
+	Add: Line: EXPINV DueDate
+	 Height      : 18 mms
+	Local:Line: EXPINV DueDate : Local:Field: name Field :Line:4
+	Local:Line: EXPINV DueDate : Local:Field: name Field :Style:  Small Italic
+;	Add: Line: EXPINV OtherRef
+;	Local:Line: EXPINV OtherRef:Local:Field:name field : Line:2
+;	Local:Line: EXPINV OtherRef: Local:Field: name Field :Style:  Small Italic
+	
+
+;                    [#Line: EXPINV DueDate]
+;
+;                        Field   : Name Field
+;                        Local   : Field : Name Field : Set as : $BasicDueDateOfPymt
+;                        Local   : Field : Name Field : Width  : (If @@IsGSTPDFExportInvWithItem Then 24.6% Else 25%) Page
+;                        Local   : Field : Name Field : Inactive: NOT @@OrderTerms
+;						Local   : Field : Name Field : Cells   : @@ExcelCellColumn - 3 * ($$Quotient:@@ExcelCellColumn:4)
+;						Local   : Field : Name Field : Line: 4
+;                

@@ -1,0 +1,41 @@
+[#Menu: gateway of tally]
+	Add: Item: "Development" :Display:dev
+	[Report: dev]
+		Form: dev 
+		[Form: dev]
+			Part: dev
+			[Part: dev]
+				Line: dev
+				[Line: dev]
+					Field: dev
+					[Field: dev]
+						Set as: "Have a Good day ahead"
+						Color:Green
+						
+[#Menu: gateway of tally]
+	Add: Item: "sample report" :Display: samp
+	[Report: samp]
+		Form: samp
+		[Form: samp]
+			Part: s
+			[Part: s]
+				Line: s
+				[Line: s]
+					Field: s
+					[Field: s]
+						Set as: "stock report"
+						Color:Blue
+						
+[#Menu: gateway of tally]
+	Add: Item: "sample report" :Display: sam
+	[Report: sam]
+		Form: sam
+		[Form: sam]
+			Part: sam
+			[Part: sam]
+				Line: sam
+				[Line: sam]
+					Field: sam
+					[Field: sam]
+						Set as: "stock report"
+						Color:Blue

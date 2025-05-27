@@ -1,0 +1,43 @@
+[#Menu : gate way of tally]
+	Add: Item: "day 1.0 sample" : Menu : sample list
+	[Menu: sample list]
+		Item : "sample" :Display: sample
+		Item : "sample1" : Display: sample2
+		
+	[Report: sample]
+		Form: sample
+		[Form: sample]
+			Width: 100% page
+			Height: 25% page
+			Part: sample
+			Background: red
+			
+			[Part: sample]
+				Line : sample
+				Background: yellow
+				Height: 25% page
+				[Line : sample]
+					Field: sample
+					[Field: sample]
+						Set as: "Welocme to the world of TDL"
+						Color: blue
+						Style: Small Serif Bold Italic
+						Border: Double Sub Column Titles
+						Align: Center
+						Set as: "Thank you"
+						
+	[Report: sample2]
+		Form: sample2
+		[Form: sample2]
+			Part: sample2
+			[Part: sample2]
+				Line: sample2
+				[Line: sample2]
+					Field: sample2
+					[Field: sample2]
+						Set as: "welcome"
+						Style: Header Title5
+						Color: red
+						Border: Button Border
+						
+						
