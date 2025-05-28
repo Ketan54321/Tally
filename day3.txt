@@ -1,19 +1,18 @@
 [#Menu: gate way of tally]
-	Add:Item: "DataType" : Alter: field modifier
+	Add:Item: "DataType" : Alter: datatype
 	[Report: datatype]
 		Form: datatype
 		[Form: datatype]
 			Parts: Number, String,Date, Logical
 			[Part: Number]
 				Height: 25% page
-				Width: 80% page
+				Width: 100% page
 				Line: des, num
 				Background: red
 				[Line: des]
 					Field:des
 					[Field: des]
 						Set as: Number data type
-						Skip: Yes
 				[Line: num]
 					Field: num
 					[Field: num]
@@ -23,54 +22,49 @@
 						
 			[Part: String]
 				Height: 25% page
-				Width: 90% page
+				Width: 100% page
 				Line: des1, String
 				Background: yellow
 				[Line: des1]
 					Field:des1
 					[Field: des1]
 						Set as: String data type
-						Skip: Yes
 				[Line: String]
 					Field: String
-					Height: 9 mms
 					[Field: String]
 						Type: String
 						Set as: Hellow World
 								
 			[Part: Logical]
 				Height: 25% page
-				Width: 70% page
+				Width: 100% page
 				Line: des2, Logical
 				Background: Blue
 				[Line: des2]
 					Field:des2
 					[Field: des2]
 						Set as: Logical data type
-						Skip: Yes
-						
 				[Line: Logical]
 					Field: Logical
 					[Field: Logical]
 						Type: Logical
-						Set as: False
+						Set as: Off
 						Max:3
 						
 			[Part: date]
 				Height: 25% page
-				Width: 60% page
+				Width: 100% page
 				Line: des3, date
 				Background: green
 				[Line: des3]
 					Field:des3
 					[Field: des3]
 						Set as: date data type
-						Skip: yes
 				[Line: date]
 					Field: date
 					[Field: date]
 						Type: date
-						Set as: "30-4-2024"
+						Set as: 1
 						Max:10
 						
 						

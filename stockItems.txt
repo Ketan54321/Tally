@@ -9,10 +9,10 @@ Add:Item:"List of stock item" : Alter: List of SI
 
 [Form	:	List of SI]
 
-	Part			: 	List of SI
-	Width			: 	50% page
-	Height			:	50% page
-	Vertical Align	: Top
+	Part	: 	List of SI
+	Width	: 	50% page
+	Height	:	50% page
+	Vertical Align: Top
 	
 
 [Part	:	List of SI]

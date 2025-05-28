@@ -8,6 +8,6 @@
 				Line: day4
 				[Line: day4]
 					Field: day4
-					[Field: day4]
+					[Field: day4.1]
 						Set as: "Anoter page"
 						

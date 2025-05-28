@@ -78,17 +78,17 @@
 [Field	:	Mno_field2]
 	
 	Set as			:	"+91-"
-	Table			:	CountryCode
+;	Table			:	CountryCode
 	Show Table		:	Always
 	Width			:	10% page
 	Style			:	Normal bold
 	
-[Collection	:	CountryCode]
-	
-	Title			: "country_code"
-	Type			:	List of country codes
-	Fetch			:	name	
-	Format			:	$Name , 20
+;[Collection	:	CountryCode]
+;	
+;	Title			: "country_code"
+;	Type			:	List of country codes
+;	Fetch			:	name	
+;	Format			:	$Name , 20
 	
 	
 [Field	:	Mno_field3]

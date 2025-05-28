@@ -10,11 +10,11 @@
 	
 	Title		:	"Select ledger"
 	Type		:	Ledger
-;	Child Of	:	$$GroupSundryDebtors
+	Child Of	:	$$GroupSundryDebtors
 	Belongs To	:	Yes
 	Variable	:	TriggeredLedger
 	Trigger		:	Triggercollection
-	Report		:	Triggercollection
+	Report		:	led
 	Fetch		:	Name
 	Format		:	$Name , 30
 	Full Height	:	Yes

@@ -1,0 +1,136 @@
+
+; A Simple UDF can only store values of a single data type; so, when multiple values of different
+; data types are required to be stored as one entity, an Aggregate UDF can be used.
+; Aggregate UDFs are very useful for storing multiple values and repeated values. An aggregate
+; UDF is a combination of different types of UDFs. Aggregate UDFs can be used to store user data
+; in a tabular format, attached to any internal object, and can be used as a collection of UDFs.
+;
+; [System : UDF]
+;    <Name of UDF> : Aggregate : <Index Number>
+
+
+[#Menu	:	Gateway Of tally]
+
+	Add	:	Item	:	"Employee Master"	:	Alter	:	Employee Details
+
+[Report	:	Employee Details]
+			
+	Form	:	Employee Details
+	Object	: 	company
+	
+	
+[Form	:	Employee Details]
+	
+	Part	:	Employee Details
+	Space Left	:	5 mms
+	Space Right	:	5 mms
+	
+	
+[Part	:	Employee Details]
+	
+	Line	:	Employee Title , Employee Details
+	Repeat	:	Employee Details	:	EmployeesList
+	Break On:	$$IsEmpty:$STEmployeename
+	Scroll	:	Vertical
+	Border	:	thinBox
+	Common Border	:	yes
+
+	
+[Line	:	Employee Title]
+		
+	Field	:	EmployeenameT , EmployeAgeT , EmployeeMobilenumberT , EmployeeMailIdT , EmployeeDOJT
+	Border	:	thinBottom
+	
+[Field	:	EmployeenameT]
+	Use		:	Titlefield
+	Set as	:	"Name"
+
+[Field	:	EmployeAgeT]
+	Use		:	Titlefield
+	Set as	:	"Age"
+	
+[Field	:	EmployeeMobilenumberT]
+	Use		:	Titlefield
+	Set as	:	"Mobile No"
+
+[Field	:	EmployeeMailIdT]
+	Use		:	Titlefield
+	Set as	:	"Email"
+	
+[Field	:	EmployeeDOJT]	
+	Use		:	Titlefield
+	Set as	:	"Date of Joining"
+
+[Field	:	Titlefield]
+	Use		:	Bame Field
+ 	Skip	:	Yes
+	Width	:	15	
+	Align	:	Center
+		
+[Line	:	Employee Details]
+	
+	Field	:	Employeenamee , EmployeAge , EmployeeMobilenumber , EmployeeMailId , EmployeeDOJ
+
+[Field		:	Employeenamee]
+	Type	:	String
+	Storage	:	STEmployeename
+	Width	:	15
+	Max		:	100
+	Case	:	Normal
+	Border	:	thinRight
+	
+	
+[Field		:	EmployeAge]
+	Type	:	Number
+	Storage	:	STEmployeAge
+	Width	:	15
+	Max		:	3
+	Format	:	"No Zero"
+	Skip	:	$$IsEmpty:#Employeenamee
+	Notify	:	Notify_if_fieldempty : $$IsEmpty:$$Value
+	Border	:	thinRight
+
+; Notify : <System Formula : Logical Condition>	
+
+[Field		:	EmployeeMobilenumber]
+	Type	:	Number
+	Storage	:	STEmployeeMobilenumber
+	Width	:	15
+	Max		:	10
+	Format	:	"No Zero,NoComma"
+	Skip	:	$$IsEmpty:#Employeenamee
+	Control	:	Notify_if_fieldempty : $$StringLength:$$Value < 10
+	Border	:	thinRight
+; Control : <System Formula : Logical Condition>
+	
+[Field		:	EmployeeMailId]
+	Type	:	String
+	Storage	:	STEmployeeMailId
+	Width	:	15
+	Max		:	100
+	Case	:	All Capital
+	Skip	:	$$IsEmpty:#Employeenamee
+	Border	:	thinRight
+
+[Field		:	EmployeeDOJ]
+	
+	Type	:	Date
+	Storage	:	STEmployeeDOJ
+	Width	:	15
+	Max		:	15	
+	Skip	:	$$IsEmpty:#Employeenamee
+	
+
+[ System	:	UDF]
+	STEmployeeDOJ			:	date		:	30010
+	STEmployeeMailId		:	String		:	30011
+	STEmployeeMobilenumber	:	Number		:	30012
+	STEmployeAge  			:	Number		:	30013
+	STEmployeename			:	String		:	30014
+	EmployeesList			:	Aggregate	:	30015
+		
+	
+[System	:	Formula]
+	
+	Notify_if_fieldempty	:	"Enter the Age"
+	

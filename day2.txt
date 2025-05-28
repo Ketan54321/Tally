@@ -8,21 +8,15 @@
 	[Report: sample]
 		
 		Form: sample
-		
-		 
 		[Form: sample]
 			
-			Width: 50% page
+			Width: 100% page
 			Height: 25% page
-			Background: red
 			Part: sample
 			[Part: sample]
-				
 				Line : sample
 				[Line : sample]
 					Field: sample
-					Height: 5
-					
 					[Field: sample]
 						Set as: "Welocme to the world of TDL"
 						Color: blue
