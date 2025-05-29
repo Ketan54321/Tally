@@ -1,0 +1,90 @@
+[#Menu	:	Gateway Of Tally]
+	Add	:	Item	:	"Employee Details"	:	Alter	:	EmpDetails
+	
+[Report	:	EmpDetails]
+	Form			:	EmpDetails
+	Object			:	company
+	
+[Form	:	EmpDetails]
+	Part			:	EmpDetails
+	Space Left		:	10 mms
+	Space Right		:	10	mms
+	
+	
+[Part	:	EmpDetails]
+	Line			:	EmpTitle , EmpDetails
+	Repeat			:	EmpDetails	: Emp_List
+	Break On		:	$$IsEmpty:$EmpDetSId
+	Border			:	thin box
+	Scroll			:	Vertical
+	Common Border	:	Yes
+	
+	
+	
+[Line	:	EmpTitle]
+	Field			:	EmpTitId,	EmpTitName,	EmpTitSal
+	Border			:	thin bottom
+
+	
+[Field	:	EmpTitId]
+	Width			:	3
+	Info			:	Id
+	
+[Field	:	EmpTitName]
+	Width			:	20
+	Info			:	Name
+	
+[Field	:	EmpTitSal]
+	Width			:	10
+	Info			:	Salry
+	
+[Field	:	title_fld]
+	Align	:	Center
+	Style	:	small italic
+	
+	
+[Line	:	EmpDetails]
+	Field			:	EmpDetId,	EmpDetName,	EmpDetSal
+	Border			:	Thin Bottom
+	
+[Field	:	EmpDetId]
+	Type			:	String
+	Width			:	3
+	Set as			:	""
+	Max				:	3
+	Storage			:	EmpDetSId
+	Border			:	Thin right
+	
+[Field	:	EmpDetName]
+	Type			:	String
+	Width			:	20
+	Set as			:	""
+	Max				:	50
+	Scroll			:	horizontal
+	Storage			:	EmpDetSName
+	Border			:	Thin right
+	Control			:	Notify_Name	:	$$IsEmpty:$$Value
+	Skip			:	$$IsEmpty:$EmpDetSId
+	
+[Field	:	EmpDetSal]
+	Type			:	Number
+	Width			:	10
+	Set as			:	""
+	Storage			:	EmpDetSSal
+	Max				:	10
+	Type			:	Number
+	Notify			:	Notify_sal	:	$$IsEmpty:$$Value
+	Skip			:	$$IsEmpty:$EmpDetSId
+	Format			:	"No Zero"
+	
+[System: UDF]
+	EmpDetSSal		:	Number		:	30020
+	EmpDetSName		:	String		:	30021
+	EmpDetSId		:	String		:	30022
+	Emp_List		:	Aggregate	:	30015
+	
+[System: Formula]
+	Notify_Name		:	"Name required"
+	Notify_sal		:	"salary is not specified"
+	
+	
