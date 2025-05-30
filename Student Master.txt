@@ -1,0 +1,165 @@
+[#Menu	:	Gateway Of tally]
+	Add	:	Item	:	"Student Master"	:	Alter	:	Stu_Database
+	
+[Report	:	Stu_Database]
+	Form	:	Stu_Database
+	
+[Form	:	Stu_Database]
+	Part	:	Stu_Database
+	
+	
+[Part	:	Stu_Database]
+	Line	:	Stu_D_Title  ,	Stu_D_Detail
+	Repeat	:	Stu_D_Detail
+	Break On:	$$IsEmpty:$_Id
+	Object	:	company
+	Scroll	:	Vertical
+	
+;*************************Title Line***************************
+	
+[Line	:	Stu_D_Title]
+	Field	:	S_ID , S_FName , S_LName , S_DOB , S_Gender , S_Section 
+	Field	:	S_MobNo , S_Address , S_Email , S_Grade  
+	
+	[Field	:	S_ID]
+		Info		:	Roll No
+		Width		:	10
+		Use			:	Title
+		
+	[Field	:	S_FName]
+		Info		:	First Name
+		Width		:	15
+		Use			:	Title
+		
+	[Field	:	S_LName]
+		Info		:	Last Name
+		Width		:	15
+		Use			:	Title
+		
+	[Field	:	S_DOB]
+		Info		:	DOB
+		Width		:	10
+		Use			:	Title
+		
+	[Field	:	S_Gender]
+		Info		:	Gender
+		Width		:	10
+		Use			:	Title
+		
+	[Field	:	S_Section]
+		Info		:	Section
+		Width		:	10
+		Use			:	Title
+		
+	[Field	:	S_MobNo]
+		Info		:	Mobile No
+		Width		:	15
+		Use			:	Title
+		
+	[Field	:	S_Address]
+		Info		:	Address
+		Width		:	15
+		Use			:	Title
+		
+	[Field	:	S_Email]
+		Info		:	Email
+		Width		:	15
+		Use			:	Title
+		
+	[Field	:	S_Grade]
+		Info		:	Grade
+		Width		:	10
+		Use			:	Title
+		
+	[Field	: Title]
+		Style		:	Large Bold
+		Align		:	Center
+		Case		:	Upper Case
+		Color		:	Blue
+		Background	:	Green
+		Border		:	Thin Box
+		Border3D	:	Yes
+		Cells		:	Yes
+		
+;***********************Student Details******************************
+
+	[Line	:	Stu_D_Detail]
+	Field	:	SID , SFName , SLName , SDOB , SGender , SSection 
+	Field	:	SMobNo , SAddress , SEmail , SGrade  
+	
+	[Field	:	SID]
+		Set as		:	""
+		Width		:	10
+		Storage		:	_Id	
+		Max			:	10
+		
+	[Field	:	SFName]
+		Set as		:	""
+		Width		:	15
+		Storage		:	_FName
+		Max			:	10
+		
+	[Field	:	SLName]
+		Set as		:	""
+		Width		:	15
+		Storage		:	_LName
+		Max			:	10
+		
+	[Field	:	SDOB]
+		Set as		:	""
+		Width		:	10
+		Type		:	Date
+		Storage		:	_DOB
+		Max			:	10
+		
+	[Field	:	SGender]
+		Set as		:	""
+		Width		:	10
+		Storage		:	_Gender
+		Max			:	10
+		
+	[Field	:	SSection]
+		Set as		:	""
+		Width		:	10
+		Storage		:	_Section
+		Max			:	10
+		
+	[Field	:	SMobNo]
+		Set as		:	""
+		Width		:	15
+		Type		:	Number
+		Format		:	"NoComma,NoZero"	
+		Storage		:	_MobNo
+		Max			:	10
+		
+	[Field	:	SAddress]
+		Set as		:	""
+		Width		:	15
+		Storage		:	_Address
+		Max			:	10
+		
+	[Field	:	SEmail]
+		Set as		:	""
+		Width		:	15
+		Storage		:	_Email
+		Max			:	10
+		
+	[Field	:	SGrade]
+		Set as		:	""
+		Width		:	10
+		Storage		:	_Grade
+		Max			:	10
+		
+[System	:	UDF]
+	_Id			:	String		:	30030
+	_FName		:	String	 	:	30031
+	_LName		:	String	 	:	30032
+	_DOB		:	Date	 	:	30033
+	_Gender		:	String	 	:	30034
+	_Section	:	String	 	:	30035
+	_MobNo		:	Number	 	:	30036
+	_Address	:	String	 	:	30037
+	_Email		:	String	 	:	30038
+	_Grade		:	String	 	:	30039
+	Stu_D_Detail:	Aggregate	:	30040
+		
