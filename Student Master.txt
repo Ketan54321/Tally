@@ -3,17 +3,19 @@
 	
 [Report	:	Stu_Database]
 	Form	:	Stu_Database
+	Object	:	company
 	
 [Form	:	Stu_Database]
 	Part	:	Stu_Database
-	
+	Background: Light Grey
 	
 [Part	:	Stu_Database]
 	Line	:	Stu_D_Title  ,	Stu_D_Detail
-	Repeat	:	Stu_D_Detail
+	Repeat	:	Stu_D_Detail	:	SD_List
 	Break On:	$$IsEmpty:$_Id
-	Object	:	company
 	Scroll	:	Vertical
+	Common Border	:	True
+	
 	
 ;*************************Title Line***************************
 	
@@ -21,19 +23,20 @@
 	Field	:	S_ID , S_FName , S_LName , S_DOB , S_Gender , S_Section 
 	Field	:	S_MobNo , S_Address , S_Email , S_Grade  
 	
+	
 	[Field	:	S_ID]
 		Info		:	Roll No
-		Width		:	10
+		Width		:	5
 		Use			:	Title
 		
 	[Field	:	S_FName]
 		Info		:	First Name
-		Width		:	15
+		Width		:	20
 		Use			:	Title
 		
 	[Field	:	S_LName]
 		Info		:	Last Name
-		Width		:	15
+		Width		:	20
 		Use			:	Title
 		
 	[Field	:	S_DOB]
@@ -58,12 +61,12 @@
 		
 	[Field	:	S_Address]
 		Info		:	Address
-		Width		:	15
+		Width		:	20
 		Use			:	Title
 		
 	[Field	:	S_Email]
 		Info		:	Email
-		Width		:	15
+		Width		:	20
 		Use			:	Title
 		
 	[Field	:	S_Grade]
@@ -72,14 +75,14 @@
 		Use			:	Title
 		
 	[Field	: Title]
-		Style		:	Large Bold
+		Style		:	small italic
 		Align		:	Center
 		Case		:	Upper Case
 		Color		:	Blue
 		Background	:	Green
 		Border		:	Thin Box
 		Border3D	:	Yes
-		Cells		:	Yes
+		
 		
 ;***********************Student Details******************************
 
@@ -89,21 +92,28 @@
 	
 	[Field	:	SID]
 		Set as		:	""
-		Width		:	10
+		Width		:	5
 		Storage		:	_Id	
 		Max			:	10
+		Use			:	Details
+		Unique		:	Yes
 		
 	[Field	:	SFName]
 		Set as		:	""
-		Width		:	15
+		Width		:	20
 		Storage		:	_FName
-		Max			:	10
+		Max			:	50
+		Use			:	Details
+		Notify		:	Notify_SName	:$$IsEmpty:$$Value
+		Skip		:	$$IsEmpty:#SID
 		
 	[Field	:	SLName]
 		Set as		:	""
-		Width		:	15
+		Width		:	20
 		Storage		:	_LName
-		Max			:	10
+		Max			:	50
+		Use			:	Details
+		Skip		:	$$IsEmpty:#SID
 		
 	[Field	:	SDOB]
 		Set as		:	""
@@ -111,44 +121,76 @@
 		Type		:	Date
 		Storage		:	_DOB
 		Max			:	10
+		Use			:	Details
+		Notify		:	Notify_SDOB	:$$IsEmpty:$$Value
+		Skip		:	$$IsEmpty:#SID
 		
 	[Field	:	SGender]
 		Set as		:	""
 		Width		:	10
 		Storage		:	_Gender
 		Max			:	10
+		Use			:	Details
+		Notify		:	Notify_Gender	:$$IsEmpty:$$Value
+		Skip		:	$$IsEmpty:#SID
+		Table		:	Gender
+		Show Table	:	Always
 		
 	[Field	:	SSection]
 		Set as		:	""
 		Width		:	10
 		Storage		:	_Section
 		Max			:	10
+		Use			:	Details
+		Notify		:	Notify_Section	:$$IsEmpty:$$Value
+		Skip		:	$$IsEmpty:#SID
 		
 	[Field	:	SMobNo]
 		Set as		:	""
 		Width		:	15
 		Type		:	Number
-		Format		:	"NoComma,NoZero"	
+		Format		:	"No Comma,No Zero"	
 		Storage		:	_MobNo
-		Max			:	10
+		Max			:	15
+		Use			:	Details
+		Notify		:	Notify_No	:$$IsEmpty:$$Value
+		Skip		:	$$IsEmpty:#SID
 		
 	[Field	:	SAddress]
 		Set as		:	""
-		Width		:	15
+		Width		:	20
 		Storage		:	_Address
-		Max			:	10
+		Max			:	50
+		Use			:	Details
+		Notify		:	Notify_Address	:$$IsEmpty:$$Value
+		Skip		:	$$IsEmpty:#SID
 		
 	[Field	:	SEmail]
 		Set as		:	""
-		Width		:	15
+		Width		:	20
 		Storage		:	_Email
-		Max			:	10
+		Max			:	50
+		Use			:	Details
+		Notify		:	Notify_Email	:$$IsEmpty:$$Value
+		Skip		:	$$IsEmpty:#SID
 		
 	[Field	:	SGrade]
 		Set as		:	""
 		Width		:	10
 		Storage		:	_Grade
 		Max			:	10
+		Use			:	Details
+		Notify		:	Notify_Grade	:$$IsEmpty:$$Value
+		Skip		:	$$IsEmpty:#SID
+		
+	[Field	:	Details]
+		Color		:	red
+		Background	:	Yellow
+		Border		:	thin box
+		Align		:	Center
+		Style		:	Large Bold
+		Case		:	First Upper Case
+		Border3D	:	Yes
 		
 [System	:	UDF]
 	_Id			:	String		:	30030
@@ -161,5 +203,44 @@
 	_Address	:	String	 	:	30037
 	_Email		:	String	 	:	30038
 	_Grade		:	String	 	:	30039
-	Stu_D_Detail:	Aggregate	:	30040
+	SD_List		:	Aggregate	:	30040
+	
+[System	:	Formula]
+	
+	Notify_SName		:	"Enter The Name"
+	Notify_SDOB			:	"Enter Date of birth"
+	Notify_Gender		:	"Enter Gender"
+	Notify_Section		:	"Enter Section"
+	Notify_No			:	"Enter Mobile No"
+	Notify_Address		:	"Enter Address"
+	Notify_Email		:	"Enter Email"
+	Notify_Grade		:	"Enter Grade"
+
+
+[Collection	:	Student_Database]
+	
+	Title		:	"Student Database"
+	Type		:	SD_List	:	Company
+	Child Of	:	##SVCurrentCompany
+	Sub Title	:	"ID", "First Name" , "Last Name " , "DOB" , "Gender" , "Section" , "Mobile No", "Address" 
+	Sub Title	:	"Email" , "Grade"
+	Fetch		:	_Id , _FName ,_LName , _DOB ,_Gender, _Section , _MobNo , _Address	, _Email , _Grade
+	Unique		:	SI_Id , _Id
+	Format		:	$_Id 		, 5
+	Format		:	$_FName 	, 10
+	Format		:	$_LName 	, 10
+	Format		:	$_DOB 		, 10
+	Format		:	$_Gender 	, 10
+	Format		:	$_Section 	, 5
+	Format		:	$_MobNo 	, 10
+	Format		:	$_Address 	, 10
+	Format		:	$_Email 	, 15
+	Format		:	$_Grade 	, 5
+	
+[Collection	:	Gender]
+	Title	:	Gender List
+	List	:	Male , Female , Others
+
+	
+	
 		

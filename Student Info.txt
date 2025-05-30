@@ -1,0 +1,80 @@
+[#Menu	:	Gateway Of tally]
+	Add	:	Item	:	"Student Information"	:	Alter	:	stu_Info
+	
+[Report	: stu_Info]
+	Form			: 	stu_Info
+	Object			:	company
+	
+[Form	: stu_Info]
+	Part			:stu_Info
+	
+[Part	: stu_Info]
+	Line			:	SI_Title , SI_Details
+	Scroll			:	Vertical
+	Repeat			:	SI_Details	:	SI_store
+	Break On		:	$$IsEmpty:$I_ID
+	Common Border	:	True
+	
+;*************************************Student Title***********************
+	
+[Line	:	SI_Title]
+	Field			:	SI_Id , SI_Name, SI_Grade
+	
+	[Field	:	SI_Id]
+		Info			:	ID
+		Width			:	5
+		Use				:	Title
+		
+	[Field	:	SI_Name]
+		Info			:	Name
+		Width			:	20
+		Use				:	Title
+		
+			
+	[Field	:	SI_Grade]
+		Info			:	Grade
+		Width			:	5
+		Use				:	Title
+		
+		
+;****************************Details of  student ********************************
+[Line	:	SI_Details]
+	Field	:	SIId , SIName, SIGrade
+	Border	:	thin top bottom 
+	
+	[Field	:	SIId]
+		Set as			:	""
+		Width			:	5
+		Max				:	5
+		Storage			:	I_ID
+		Use				:	Details
+		Set as			:	$$Table:SI_Details:$_Id
+		Border			:	Thin right
+		Table			:	Student_Database
+		Show Table		: 	Always
+		Control			:	Notify_SName :	$$IsEmpty:$$Value
+		Dynamic			:	""
+		
+	[Field	:	SIName]
+		Set as			:	""
+		Width			:	20
+		Max				:	50
+		Storage			:	I_Name
+		Use				:	Details
+		Set as			:	$$Date:$$Table:SI_Details:$_FName 
+		Skip			:	$$IsEmpty:#SIId
+		
+	[Field	:	SIGrade]
+		Set as			:	""
+		Width			:	5
+		Max				:	5
+		Storage			:	I_Grade
+		Use				:	Details
+		Set as			:	$$Date:$$Table:SI_Details:$__Grade  
+		Skip			:	$$IsEmpty:#SIId
+
+[System	:	UDF]
+	I_ID		:	String		:	30050
+	I_Name		:	String		:	30051
+	I_Grade		:	String		:	30052
+	SI_store	:	Aggregate	:  30053

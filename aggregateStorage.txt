@@ -29,7 +29,7 @@
 [Part	:	Employee Details]
 	
 	Line	:	Employee Title , Employee Details
-	Repeat	:	Employee Details	:	EmployeesList
+	Repeat	:	Employee Details	:	EmployeesLists
 	Break On:	$$IsEmpty:$STEmployeename
 	Scroll	:	Vertical
 	Border	:	thinBox
@@ -127,7 +127,7 @@
 	STEmployeeMobilenumber	:	Number		:	30012
 	STEmployeAge  			:	Number		:	30013
 	STEmployeename			:	String		:	30014
-	EmployeesList			:	Aggregate	:	30015
+	EmployeesLists			:	Aggregate	:	30015
 		
 	
 [System	:	Formula]
@@ -135,3 +135,24 @@
 	Notify_if_age_fieldempty	:	"Enter the Age"
 	Notify_if_no_fieldempty		:	"Enter correct mobile number"
 	
+
+[Collection	:	Employeelists SRC]
+	
+	Title	:	"EmployeeDetails"
+	Type	:	EmployeesLists	:	Company
+	Child Of:	##SVCurrentCompany
+	Sub Title:	"Name", "Date of joining" , "Mail " , "Mob No" , "Age"
+	Fetch	:	STEmployeename , STEmployeeDOJ ,STEmployeeMailId , STEmployeeMobilenumber ,STEmployeAge  	
+;	Unique	:	$EmpDetSName , $STEmployeename 
+	Format	:	$STEmployeename , 20
+	Format	:	$STEmployeeDOJ , 10
+	Format	:	$STEmployeeMailId , 20
+	Format	:	$STEmployeeMobilenumber , 10
+	Format	:	$STEmployeAge , 3
+	
+	
+	
+; select $STEmployeename , $STEmployeeDOJ ,$STEmployeeMailId , $STEmployeeMobilenumber ,$STEmployeAge from EmployeelistsSRC
+
+	
+

@@ -1,3 +1,23 @@
+; [Field : My SelectAuto]
+; Use         : Short Name Field
+; Table       : MyAutoColumns 
+;Show Table  : Always
+; [Field : My AutoColumns]
+; Use         : Short Name Field Invisible : Yes
+; Set as      : $$Table : MySelectAuto : $VarName 
+;Set always  : Yes
+; Skip        : Yes
+; ;; Function Table selects the Object Name from the previous Field My SelectAuto
+; ;; and displays the corresponding method value of VarName
+; [Field : My CollName]
+; Use            : Short Name Field 
+;Invisible      : Yes
+; Set as         : $$Table : MySelectAuto : $CollName 
+;Modifies       : DSPRepeatCollection
+; Set always     : Yes 
+;Skip           : Yes
+
+
 [#Menu	:	Gateway Of Tally]
 	Add	:	Item	:	"Employee Details"	:	Alter	:	EmpDetails
 	
@@ -22,21 +42,25 @@
 	
 	
 [Line	:	EmpTitle]
-	Field			:	EmpTitId,	EmpTitName,	EmpTitSal
+	Field			:	EmpTitId,	EmpTitName,	EmpTitSal , EmpTiDOJ
 	Border			:	thin bottom
-
+	
 	
 [Field	:	EmpTitId]
-	Width			:	3
+	Width			:	15
 	Info			:	Id
 	
 [Field	:	EmpTitName]
-	Width			:	20
+	Width			:	30
 	Info			:	Name
 	
 [Field	:	EmpTitSal]
-	Width			:	10
+	Width			:	20
 	Info			:	Salry
+	
+[Field	:	EmpTiDOJ]
+	Width	:	10
+	Info	:	Date of Joining
 	
 [Field	:	title_fld]
 	Align	:	Center
@@ -44,12 +68,12 @@
 	
 	
 [Line	:	EmpDetails]
-	Field			:	EmpDetId,	EmpDetName,	EmpDetSal
+	Field			:	EmpDetId,	EmpDetName,	EmpDetSal	,	EmpDeDOJ
 	Border			:	Thin Bottom
 	
 [Field	:	EmpDetId]
 	Type			:	String
-	Width			:	3
+	Width			:	15
 	Set as			:	""
 	Max				:	3
 	Storage			:	EmpDetSId
@@ -57,18 +81,22 @@
 	
 [Field	:	EmpDetName]
 	Type			:	String
-	Width			:	20
+	Width			:	30
 	Set as			:	""
 	Max				:	50
 	Scroll			:	horizontal
+	Set as			:	$$Table:EmpDetName:$STEmployeename
 	Storage			:	EmpDetSName
 	Border			:	Thin right
+	Table			:	Employeelists SRC
+	Show Table		: 	Always
 	Control			:	Notify_Name	:	$$IsEmpty:$$Value
 	Skip			:	$$IsEmpty:$EmpDetSId
+	Dynamic			:	""
 	
 [Field	:	EmpDetSal]
 	Type			:	Number
-	Width			:	10
+	Width			:	20
 	Set as			:	""
 	Storage			:	EmpDetSSal
 	Max				:	10
@@ -76,12 +104,20 @@
 	Notify			:	Notify_sal	:	$$IsEmpty:$$Value
 	Skip			:	$$IsEmpty:$EmpDetSId
 	Format			:	"No Zero"
+	Border			:	Thin right
+	
+[Field	:	EmpDeDOJ]
+	Type	:	Date
+	Width	:	10
+	Set as	:	$$Date:$$Table:EmpDetName:$STEmployeeDOJ
+	Storage	:	EmpDetSDoJ
 	
 [System: UDF]
 	EmpDetSSal		:	Number		:	30020
 	EmpDetSName		:	String		:	30021
 	EmpDetSId		:	String		:	30022
 	Emp_List		:	Aggregate	:	30015
+	EmpDetSDoJ		:	Date		:	30016
 	
 [System: Formula]
 	Notify_Name		:	"Name required"
