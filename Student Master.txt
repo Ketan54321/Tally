@@ -1,5 +1,5 @@
 [#Menu	:	Gateway Of tally]
-	Add	:	Item	:	"Student Master"	:	Alter	:	Stu_Database
+	Add	:	Item	:Before	:	@@locQuit	:	"Student Master"	:	Alter	:	Stu_Database
 	
 [Report	:	Stu_Database]
 	Form	:	Stu_Database
@@ -225,7 +225,7 @@
 	Sub Title	:	"ID", "First Name" , "Last Name " , "DOB" , "Gender" , "Section" , "Mobile No", "Address" 
 	Sub Title	:	"Email" , "Grade"
 	Fetch		:	_Id , _FName ,_LName , _DOB ,_Gender, _Section , _MobNo , _Address	, _Email , _Grade
-	Unique		:	SI_Id , _Id
+	Unique		:	I_ID , _Id		
 	Format		:	$_Id 		, 5
 	Format		:	$_FName 	, 10
 	Format		:	$_LName 	, 10

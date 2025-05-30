@@ -6,7 +6,9 @@
 	Object			:	company
 	
 [Form	: stu_Info]
-	Part			:stu_Info
+	Part			:	stu_Info
+	Space Left		:	10 mms
+	Space Right		:	10 mms
 	
 [Part	: stu_Info]
 	Line			:	SI_Title , SI_Details
@@ -43,11 +45,11 @@
 	Border	:	thin top bottom 
 	
 	[Field	:	SIId]
+		Type			:	String
 		Set as			:	""
 		Width			:	5
 		Max				:	5
 		Storage			:	I_ID
-		Use				:	Details
 		Set as			:	$$Table:SI_Details:$_Id
 		Border			:	Thin right
 		Table			:	Student_Database
@@ -60,8 +62,8 @@
 		Width			:	20
 		Max				:	50
 		Storage			:	I_Name
-		Use				:	Details
-		Set as			:	$$Date:$$Table:SI_Details:$_FName 
+		Scroll			:	horizontal
+		Set as			:	$$Date:$$Table:SI_Details:$SFName
 		Skip			:	$$IsEmpty:#SIId
 		
 	[Field	:	SIGrade]
@@ -69,12 +71,11 @@
 		Width			:	5
 		Max				:	5
 		Storage			:	I_Grade
-		Use				:	Details
-		Set as			:	$$Date:$$Table:SI_Details:$__Grade  
+		Set as			:	$$Date:$$Table:SI_Details:$_FName 
 		Skip			:	$$IsEmpty:#SIId
 
 [System	:	UDF]
 	I_ID		:	String		:	30050
 	I_Name		:	String		:	30051
 	I_Grade		:	String		:	30052
-	SI_store	:	Aggregate	:  30053
+	SI_store	:	Aggregate	:   30053

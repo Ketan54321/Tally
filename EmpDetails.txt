@@ -19,7 +19,7 @@
 
 
 [#Menu	:	Gateway Of Tally]
-	Add	:	Item	:	"Employee Details"	:	Alter	:	EmpDetails
+	Add	:	Item	:	Before	:	@@locQuit	:	"Employee Details"	:	Alter	:	EmpDetails
 	
 [Report	:	EmpDetails]
 	Form			:	EmpDetails

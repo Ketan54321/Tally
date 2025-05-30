@@ -11,7 +11,7 @@
 
 [#Menu	:	Gateway Of tally]
 
-	Add	:	Item	:	"Employee Master"	:	Alter	:	Employee Details
+	Add	:	Item	:	Before	:	@@locQuit	:	"Employee Master"	:	Alter	:	Employee Details
 
 [Report	:	Employee Details]
 			

@@ -1,0 +1,108 @@
+; Static TDL Objects/External Objects
+; As discussed earlier, a user can create Static TDL Objects for which the data is hard coded.
+; Consider the following examples of Employee Details.
+; Employee Details
+; In TDL, two objects have to be created such that EmpNo, Name, Date and Designation become
+; the attributes of the object. The code snippet to create these objects is as shown:
+
+
+; Static TDL Objects cannot be stored in Tally Database. The data for the Static object is hard
+; coded in the program and can be used for display purpose only.
+
+; Syntax
+
+; [Object : Emp 1] 
+;EmpNo : E001
+; Name  : “Krishna”
+; Date  : Aug 01
+; Designation : Manager
+
+[Object	:	Emp_O0]
+	Eo_Id		:	E001
+	Name		:	"Emp Id"
+	Date		:	"1-5-2025"
+	Designation	:	"Manager"
+
+[Object	:	EMp_O1]
+	Eo_Id		:	E002
+	Name		:	"Emp Name"
+	Date		:	"1-5-2025"
+	Designation	:	"carpenter"
+	
+[Object	:	Emp_O2]
+	Eo_Id		:	E003
+	Name		:	"Emp DOJ"
+	Date		:	"1-5-2025"
+	Designation	:	"labor"
+	
+[Object	:	Emp_O3]
+	Eo_Id		:	E004
+	Name		:	"Emp Sal"
+	Date		:	"1-5-2025"
+	Designation	:	"CEO"
+
+; Syntax
+; [Collection : <Collection Name>]
+; Object : <ObjectName>, <ObjectName>, ……., <Object Name>
+
+
+
+[Collection	:	Coll_Emp]
+	Object	:	Emp_O0 , EMp_O1 , Emp_O2 , Emp_O3
+
+
+
+[#Menu	: GateWay Of Tally]
+	Add	:	Item	:	Before	:	@@locQuit	:	"Object of Emp"	: Display	:	Emp_O
+	
+[Report	:	Emp_O]
+	Form		:	Emp_O
+	
+	
+[Form	:	Emp_O]
+	Part		:	Emp_O
+	
+[Part	:	Emp_O]
+	Line		:	Emp_O_Title	,	Emp_O_Det
+	Repeat		:	Emp_O_Det	: Coll_Emp	
+	Scroll		:	Vertical
+	
+[Line	:	Emp_O_Title]
+	Field		:	EO_Id , EO_Name , EO_DOJ , EO_Des
+	Border		:	thin bottom
+	
+	[Field	:	EO_Id]
+		Info		:	"ID"
+		Width		:	5
+		
+	[Field	:	EO_Name]
+		Info		:	"Name"
+		Width		:	25
+		
+	[Field	:	EO_DOJ]
+		Info		:	"Date of joining"
+		Width		:	15
+			
+	[Field	:	EO_Des]
+		Info		:	"Designation"
+		Width		:	10
+		
+[Line	:	Emp_O_Det]
+	Field		:	EOId , EOName , EODOJ , EODes
+	
+	[Field	:	EOId]
+		Set as		:	$Eo_Id
+		Width		:	5
+		
+		
+	[Field	:	EOName]
+		Set as		:	$Name
+		Width		:	25
+		
+	[Field	:	EODOJ]
+		Set as		:	$Date
+		Width		:	15
+			
+	[Field	:	EODes]
+		Set as		:	$Designation
+		Width		:	10
