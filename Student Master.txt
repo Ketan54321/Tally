@@ -82,6 +82,7 @@
 		Background	:	Green
 		Border		:	Thin Box
 		Border3D	:	Yes
+		Scroll		:	horizontal
 		
 		
 ;***********************Student Details******************************

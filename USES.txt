@@ -1,0 +1,20 @@
+
+[Field	:	Details]
+;		Color		:	white
+;		Background	:	black
+		Border		:	thin box
+		Align		:	Center
+		Style		:	Large Bold
+		Case		:	First Upper Case
+		Border3D	:	Yes
+		
+
+[Field	: Title]
+		Style		:	Large Italic
+		Align		:	Center
+		Case		:	Title Case
+;		Color		:	Blue
+;		Background	:	white
+		Border		:	Thin Box
+		Border3D	:	Yes
+		Scroll		:	horizontal

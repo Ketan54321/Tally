@@ -1,0 +1,153 @@
+[#Menu	:	GateWay of tally]
+	Add	:	Item	:	"List of Stock Item"	:	Display	:	SI_Rep
+	
+[Report	:	SI_Rep]
+	Form	:	SI_Rep
+	
+[Form	:	SI_Rep]
+	Part	:	SI_Rep
+	
+[Part	:	SI_Rep]
+	Line			:	SI_TItle	,	SI_Des
+	Scroll			:	Both
+	Repeat	 		: 	SI_Des	: Coll_SI
+	Common Border	:	Yes
+	
+;****************************   TITLE    ********************************
+	
+[Line	:	SI_TItle]
+	Field	:	ST_No	,	Stock_T_Name	,	TGroup	,	TUOM	
+	Field	:	T_HSN Code	,	T_IGST_rate	,	T_CGST_Rate			
+	Field	:	T_SGST_Rate	,	T_Opening Balance	,	T_Rate	,	T_Amount
+	Height	:	2
+	
+	[Field	:	ST_No]
+		Use		:	Title	
+		Info	:	SI NO
+		Width	:	10
+				
+	[Field	:	Stock_T_Name]
+		Use		:	Title	
+		Info	:	Name
+		Width	:	25
+				
+	[Field	:	TGroup]
+		Use		:	Title	
+		Info	:	Group
+		Width	:	20
+				
+	[Field	:	TUOM]
+		Use		:	Title	
+		Info	:	UOM
+		Width	:	20
+				
+	[Field	:	T_HSN Code]
+		Use		:	Title	
+		Info	:	HSN Code
+		Width	:	20
+				
+	[Field	:	T_IGST_rate]
+		Use		:	Title	
+		Info	:	IGST
+		Width	:	10
+				
+	[Field	:	T_CGST_Rate]
+		Use		:	Title	
+		Info	:	CGST
+		Width	:	10
+				
+	[Field	:	T_SGST_Rate]
+		Use		:	Title	
+		Info	:	SGST
+		Width	:	10
+				
+	[Field	:	T_Opening Balance]
+		Use		:	Title	
+		Info	:	Opening Balance
+		Width	:	20
+				
+	[Field	:	T_Rate]
+		Use		:	Title	
+		Info	:	Rate
+		Width	:	20
+				
+	[Field	:	T_Amount]
+		Use		:	Title	
+		Info	:	Amount
+		Width	:	20
+				
+
+;********************    Details    *********************
+
+[Line	:	SI_Des]
+	Field	:	SI_No	,	Stock_Item_Name	,	Group	,	UOM	
+	Field	:	HSN Code	,	IGST_rate	,	CGST_Rate			
+	Field	:	SGST_Rate	,	Opening Balance	,	Rate	,	Amount
+	
+	[Field	:	SI_No]
+		Use		:	Details	
+		Set as	:	$$Line
+		Width	:	10
+		Type	:	Number
+		
+	
+		
+	[Field	:	Stock_Item_Name]
+		Use		:	Details	
+		Set as	:	$Name
+		Width	:	25
+		
+	[Field	:	Group]
+		Use		:	Details	
+		Set as	:	$Parent
+		Width	:	20
+		
+	[Field	:	UOM]
+		Use		:	Details	
+		Set as	:	$BaseUnits
+		Width	:	20
+		
+	[Field	:	HSN Code]
+		Use		:	Details	
+		Set as	:	$_HSNCode
+		Width	:	20
+		
+	[Field	:	IGST_rate]
+		Use		:	Details	
+		Set as	:	$_IntegratedTax
+		Width	:	10
+		
+	[Field	:	CGST_Rate]
+		Use		:	Details	
+		Set as	:	$_centralTax
+		Width	:	10
+		
+	[Field	:	SGST_Rate]
+		Use		:	Details	
+		Set as	:	$_StateTax
+		Width	:	10
+		
+	[Field	:	Opening Balance]
+		Use		:	Details	
+		Set as	:	$OpeningBalance
+		Width	:	20
+		
+	[Field	:	Rate]
+		Use		:	Details	
+		Set as	:	$OpeningRate
+		Width	:	20
+		
+	[Field	:	Amount]
+		Use		:	Details	
+		Set as	:	$_LastSalePrice
+		Width	:	20		
+
+
+[Collection: Coll_SI]			
+
+	Type 	: 	Stock Item
+	Fetch	:	Name , parent , _centralTax , _HSNCode , _StateTax , _IntegratedTax 
+	Fetch	:	OpeningBalance , OpeningRate , _LastSalePrice	,	BaseUnits
+
+
+[Include	:	C:\Users\user\Desktop\Tally Developer\Tally\USES.txt]
