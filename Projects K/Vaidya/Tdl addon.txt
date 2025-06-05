@@ -1,0 +1,24 @@
+[#Part:   CMP TALLYSHOPFEATURES lEFT]
+    
+        Add :   Line    : At End    :   K_A_addon
+        
+[Line: K_A_addon]
+    
+    Field   :   medium prompt, K_aaddon
+    
+    Local   :  Field    :   medium prompt   :   Set as  :   "Enable custom invoice"
+    Local   :   Field   :   medium prompt   :  Style    :   Normal
+    
+    [Field: K_aaddon]
+        
+        Use     : Logical field
+        Storage : K_aaddon
+        Style   : Normal
+        
+[System: Formula]
+    
+    K_aaddon: $K_aaddon:company:##svcurrentcompany
+    
+[System: UDF]
+    K_aaddon    :   Logical :   20004
+    

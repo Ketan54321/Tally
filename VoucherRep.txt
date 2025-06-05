@@ -1,0 +1,122 @@
+[#Menu  :   GateWay Of Tally]
+    
+    Add : Item  : "Voucher Report" : Display : K_VR
+    
+[Report: K_VR]
+    
+    Form    :   K_VR
+    
+[Form: K_VR]
+    
+    Part    :   K_VRTop , K_VR2 , K_VRBottom
+    Height  :   100% screen
+    Width   :   100% screen
+    Button	:   Change Menu Date
+    
+[Part: K_VRTop]
+    
+     Line   :   K_VR_IN
+     Border :   Thin Cover
+     
+    [Line: K_VR_IN]
+        
+        Fields  :   K_VR_IN , K_VR_D , K_VR_VT , K_VR_PN , K_VR_AT
+        
+        Local   :   Field   :   K_VR_IN :   Set as  :   "Invoice Number"    
+        Local   :   Field   :   K_VR_D  :   Set as  :   "Date"
+        Local   :   Field   :   K_VR_VT :   Set as  :   "Voucher Type"
+        Local   :   Field   :   K_VR_PN :   Set as  :   "Party Name"
+        Local   :   Field   :   K_VR_AT  :   Set as  :   "Amount"
+    
+[Part: K_VR2]
+    
+    Line            :   K_VR2
+    Repeat          :   K_VR2  :  K_VR_Coll
+    Total           :   K_VR_A
+    Border          :   Thin Cover
+    Scroll          :   Vertical
+    Common Border   :  Yes
+    
+    
+    [Line: K_VR2]
+        
+        Field   :   K_VR_IN  , K_VR_D  , K_VR_VT  , K_VR_PN  , K_VR_A
+        
+         
+        
+        [Field: K_VR_IN]
+            
+            Use         :   Name Field
+            Set as      :   $VoucherNumber
+            Width       :   10% screen
+            Border      :   Thin Right
+            Align       :   Center
+           
+            
+        [Field: K_VR_D]
+            
+            Set as      :   $Date
+            Use         :   Date field
+            Width       :   10% screen
+            Border      :   Thin Right
+            Style       :   Normal Bold
+            Align       :   Center
+            
+        [Field: K_VR_VT]
+            
+            Set as	    :	$VOUCHERTYPENAME
+            Use         :   Name field
+            Width       :   35% screen
+             Border     :   Thin Right
+            
+        [Field: K_VR_PN]
+            
+            Set as      :   $LEDGERNAME
+            Use         :   Name field
+            Width       :   35% screen
+            Border      :   Thin Right
+            
+        [Field: K_VR_A]
+            
+            Use         :   Amount field
+            Set as      :   $Amount
+            Width       :   10% screen
+            
+        [Field: K_VR_AT]
+            
+            Set as      :   $Amount
+            Width       :   10% screen
+            Align       :   Center
+            Style       :   Normal Bold
+    
+[Part: K_VRBottom]
+    
+    Space Top       :   3 mms
+    Line            :   K_VRBottom
+    Border          :   Thin Box 
+    Common Border   : Yes
+   
+    [Line: K_VRBottom]
+        
+        Field       :   K_VRBottom , K_VRAmount
+        
+        [Field: K_VRBottom]
+            
+            Set as      :   "Total"
+            Width       :   90% screen
+            Style       :   Normal bold
+            Border      :   Thin Right             
+          
+        [Field: K_VRAmount]
+            
+            Use         :   Amount field
+            Set as      :   $$Total:K_VR_A
+            Width       :   10% screen
+
+[Collection	:	K_VR_Coll]
+	
+	Type	:	Voucher
+	Fetch	:	VOUCHERTYPENAME , LEDGERNAME , VOUCHERNUMBER , DATE , AMOUNT
+    
+
+    

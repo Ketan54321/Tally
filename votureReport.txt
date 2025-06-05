@@ -18,11 +18,12 @@
 
 [Part	:	VoucherReport]
 	
-	Line	:	VoucherReportTitle , VoucherReportDetails
+	Line	:	VoucherReportTitle , VoucherReportDetails , VoucherReportTotal
 	Repeat	:	VoucherReportDetails :	GetErp_VchColl
 	Scroll	:	Vertical	
-	Border	:	Thin  Box
-	Common Border	:	Yes
+	Border	:	Thin  Cover
+    Total   :   Geterp_Amount
+;	Common Border	:	Yes
 
 [Line	:	VoucherReportTitle]
 	
@@ -36,7 +37,7 @@
 	Local	: 	Field	:	Geterp_partyName		: 	Set as	:	"party name"
 	Local	:	Field	:	Geterp_Amount			:	Set as	:	"Amount"
 	
-	Border	:	Thin Bottom
+	Border	:	Thin Cover
 	
 [Line	:	VoucherReportDetails]
 	
@@ -76,10 +77,47 @@
 	Use		:	Amount Field
 	Set as	:	$AMOUNT
 	Width	:	20% Screen 
-	Align	:	Center
+    Align   :   Right
+ 
 			
 					
 [Collection	:	GetErp_VchColl]
 	
 	Type	:	Voucher
 	Fetch	:	VOUCHERTYPENAME , LEDGERNAME , VOUCHERNUMBER , DATE , AMOUNT
+    
+
+
+
+
+
+;[Part:  Ktotal]
+;    Line    :   Total
+;    Width   :   100% Screen
+;    Height  :   10% Screen
+;    Border  :   Thick Top
+;    
+;    
+;    [Line   :   Total]
+;        Field   :   Total
+;       
+;
+;        [Field  :   Total]
+;            Set as  :   $$Total:Geterp_Amount
+;            Align   :   Left
+;            Width   :   100% screen
+;            Align   :   Right
+
+[Line	:	VoucherReportTotal]
+	
+	Use		:	VoucherReportDetails
+	
+	Local	:	Field	:	Default				:	Type	:	String	
+	
+	Local	:	Field	:	Geterp_Vouchernumber	:	Set as	:	"Total"
+	Local	:	Field	:	Geterp_vchDate			:	Set as	:	""
+	Local	:	Field	:	GetErp_voucherType		:	Set as	:	""
+	Local	: 	Field	:	Geterp_partyName		: 	Set as	:	""
+	Local	:	Field	:	Geterp_Amount			:	Set as	:	$$Total:Geterp_Amount
+	
+	Border	:	Thin Top   

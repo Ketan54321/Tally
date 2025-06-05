@@ -1,0 +1,184 @@
+;; jai shree ram jai shree krishna jai om shree shankara
+
+
+[#Menu : GateWay of tally]
+	Add : Item : Before : @@locQuit :  Renewal Report : Display : RenewalReport
+	
+
+[Report: RenewalReport]
+
+;	
+;	Use			: Browser Common SysFormulae
+;    Use         : Voucher Monthly Summary
+	
+    Family      : $$Translate:"Sales Register"
+	Title		: $$LocaleString:"Sales Register"
+    List Name   : $$LocaleString:"Sales Register"
+    
+	Help		: @@HlpSales_Register
+	
+    Set         : VoucherTypeName   : $$VchTypeSales
+    Set         : FamilyVoucherFlag : Yes
+    Set         : IsBillWiseReport  : No
+	Set			: Show BasisOfValues: Yes
+	;Object: Voucher
+	Form: RenewalReport
+	
+	[Form		: RenewalReport]
+		Height: 100% page
+		width : 100% page
+		
+	;	Part: DSP ColTitles
+		Part	: RenewalReportTitle
+		Part	: RenewalReport
+		
+		[Part	: RenewalReportTitle]
+			Line: RenewalReportTitle
+				[Line: RenewalReportTitle]
+					
+			
+					Field: RenRepBillDate, RemRepSaleMan, RenRepExpiryDate, RenVchType, RenRepLedger,RenRepStk, RenRepQty, RenRepRate
+					Right Fields: RenRepDiscount , RenRepAmt, RenRepNar , RenRepDisValue
+					
+					Local: Field: Default : type : String
+					Local: Field: Default : Delete	: Storage
+					
+						  Local : Field :  RenRepBillDate 	:Set as: "Billed Date"
+						  Local : Field :  RenRepLedger		:Set as: "Party Name"
+						  Local : Field :  RenVchType		:Set as: "vch No."
+						  Local : Field :  RemRepSaleMan	:Set as: "Billed By"
+						  Local : Field :  RenRepExpiryDate :Set as: "Expiry Date"
+						  Local : Field :  RenRepStk		:Set as: "RenRepStk"
+						  Local : Field :  RenRepQty		:Set as: "RenRepQty"
+						  Local : Field :  RenRepRate		:Set as: "Rate"
+						  Local : Field :  RenRepAmt		:Set as: "Amount"
+						  Local : Field :  RenRepNar		:Set as: "Narration"
+						  Local : Field : RenRepDiscount   :Set as: "Discount"	
+						  Local :	Field: RenRepDisValue : Set as: "Discount Amount"
+
+			
+		[Part	: RenewalReport]
+			Line	: RenewalReport
+			Repeat	: RenewalReport : Odessa_Collection1
+			Scroll: Vertical
+			;Height	: 75% page
+			
+
+
+[Collection	:	Odessa_Collection]
+    Type	:	vouchers	: VoucherType
+	Child Of	: $$VchTypeSales
+	Belongs To: Yes
+
+	 
+[Collection :   Odessa_Collection1]
+	
+	Source Collection	: Odessa_Collection
+	Walk				: ALLINVENTORYENTRIES; ALLLEDGERENTRIES;,CATEGORYALLOCATIONS,COSTCENTREALLOCATIONS
+
+	Fetch				: category,name,amount
+	
+	Compute				: dateOdessa			:	$..date
+	Compute				: VchTypeNameOdessa		:	$..vouchertypename
+	Compute				: voucherNumber			:	$voucherNumber
+	
+	Compute				: PartyLedgerName	:	$PartyLedgerName
+	Compute				: StockItemName		:	$StockItemName
+	Compute				: BilledQty			:	$BilledQty
+	Compute				: Rate				:	$Rate
+	Compute				: Amt 				:	$Amount
+	Compute				: StockItemName		:	$StockItemName
+	
+	;;VchSalesBoyName
+;	Compute				: salesperson	:  $salesperson
+	Compute				: ExpDate					 : $Vch_StockRenwalDateNew[1].Vch_StockRenwalDateNew
+	Compute				: salesperson				: $VchSalesBoyName
+	
+	
+	Compute				: Nartn					:	$NARRATION
+	Compute				:	Discount			:	$Discount
+;		VchSalesBoyName 	: String : 1111
+;	salesperson 		: String : 2102 
+;	Vch_StockRenwalDate	: Due Date 	 : 2103
+	
+
+			 [Line: RenewalReport]
+			
+			Field: RenRepBillDate, RemRepSaleMan, RenRepExpiryDate, RenVchType, RenRepLedger,RenRepStk, RenRepQty, RenRepRate
+					Right Fields: RenRepDiscount , RenRepAmt,  RenRepNar , RenRepDisValue
+					
+						  [Field :  RenRepBillDate 	]
+							  Use: Name Field 
+							  Set as: $dateOdessa
+							  Width: 15% page
+							  
+
+						  [Field: RemRepSaleMan]
+							   Use: Name Field 
+							  Set as :$salesperson;$VchSalesBoy
+							  Width: 15% page
+							  
+
+						  [Field :  RenRepLedger	]
+							   Set as: $PartyLedgerName
+							   Color: Blue 
+							   Width: 15% page
+							  
+						  [Field: RenVchType]		
+							   Width: 15% page
+							   Set as: $voucherNumber 
+							   
+						  [Field :  RenRepExpiryDate] 
+							  Use	: Short Date Field
+							   Set as: $ExpDate;$$Date:$Vch_StockRenwalDateNew
+							   Width: 15% page
+;								Vch_StockRenwalDateNew
+;                                salesperson			
+
+
+
+							  
+						  [Field :  RenRepStk	]
+							   Set as: $StockItemName
+							   Width: 15% page
+							  
+						  [Field :  RenRepQty	]
+							  Use: Qty Field 
+							  Set as: $BilledQty
+							  Width: 10% page
+							  
+						   [Field: RenRepRate]
+							Use: Rate Field 
+							  Set as: $Rate
+							  Width: 10% page
+	
+							  
+						 [ Field :  RenRepAmt	]
+							 Use: Amount Field
+							 Set as: $Amt 
+							 Width: 13% page
+							 
+						[Field: RenRepNar]
+							Set as: $Nartn
+							Width: 20% page 
+							
+						[Field	:	RenRepDiscount]
+							Use	:	Number field
+							Set as	:	$Discount
+							Width	:	10% page
+							
+;						Use         : Number Field
+;						Set as      : $Discount
+;						
+						Align       : Right
+;						Style       : Small
+;						Width       : 5
+;						Border      : Thin Left
+						Format      : "NoZero,Percentage"
+						
+
+						[Field	:	RenRepDisValue]
+							Use	:	Number field
+							Set as	:	$Amt * $Discount/100 
+							Width	:	10% page
+												

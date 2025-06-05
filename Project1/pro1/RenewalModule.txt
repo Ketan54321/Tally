@@ -1,0 +1,263 @@
+;; jai shree ram jai shree krishna jai om shree shankara
+;;[Include: DAY CHAT.tdl]
+
+;========================================================
+[Include: reports.txt]
+[#Line	: EI InvInfo]
+	Option	: Sales EI InvInfoVipa	: $$IsSales:$VoucherTypeName ;Or $$IsPurchase:$VoucherTypeName or $$IsDebitNote:$VoucherTypeName or $$IsCreditNote:$VoucherTypeName
+
+	[!Line	:Sales EI InvInfoVipa]
+		Add	: Left Fields : after	: VCH StockItem : Vch_SalesManName, Vch_StockRenwalDate,; Vch_StockRenwalDateDis
+		
+[#Line	: CI InvInfo]
+	Option	: Sales CI InvInfoVipa	: $$IsSales:$VoucherTypeName ;Or $$IsPurchase:$VoucherTypeName or $$IsDebitNote:$VoucherTypeName or $$IsCreditNote:$VoucherTypeName
+
+	[!Line	:Sales CI InvInfoVipa]
+		Add	: Left Fields : after	: VCHStockItem : Vch_SalesManName, Vch_StockRenwalDate,; Vch_StockRenwalDateDis
+[#Line	: EI ColumnOne]
+	Option	: Sales EI ColumnOneVipa	: $$IsSales:$VoucherTypeName ;or $$IsPurchase:$VoucherTypeName or $$IsDebitNote:$VoucherTypeName or $$IsCreditNote:$VoucherTypeName
+
+	[!Line	: Sales EI ColumnOneVipa]
+	add : 	left Fields : after : VCH ItemTitle: Vch_SalesManName , Vch_StockRenwalDate, ;Vch_StockRenwalDateDis
+
+		Local	: Field	: Vch_SalesManName	: Info	: "SalesMan Name "
+		Local	: Field	: Vch_SalesManName	: Delete	: Storage
+		Local	: Field	: Vch_SalesManName	: Skip		: yes
+		Local	: Field	: Vch_SalesManName	: Color		: blue 
+		Local	: Field	: Vch_SalesManName	: Space Left: 18
+		
+		Local	: Field	: Vch_StockRenwalDate	: Info	: "Next Renewal Date "
+		Local	: Field	: Vch_StockRenwalDate	: Delete	: Storage
+		Local	: Field	: Vch_StockRenwalDate	: Skip		: yes
+		Local	: Field	: Vch_StockRenwalDate	: Color		: blue 
+	;	Local	: Field	: Vch_StockRenwalDate	: Space Left: 18
+		
+	
+			Local	: Field	: Vch_StockRenwalDateDis	: Info	: "Next Renewal Date display "
+		Local	: Field	: Vch_StockRenwalDateDis	: Delete	: Storage
+		Local	: Field	: Vch_StockRenwalDateDis	: Skip		: yes
+		Local	: Field	: Vch_StockRenwalDateDis	: Color		: blue 
+
+[Field	: Vch_SalesManName]
+	Use			: Name Field
+;	Align		: center
+	Storage		: VchSalesBoyName
+;	Storage	: salesperson	
+	Show Table	: Always
+	Set always	: Yes
+	Color		: blue 
+	Width		: 18
+	Table       : List of Salesman 
+	;	Show Table  : Always
+	Key         : Create Cost Centre
+	Skip on		: Not $MstStkAgentName:StockItem:$StockItemName
+	
+	
+[System : UDF]
+	
+	VchSalesBoyName 	: String : 1111
+	salesperson 		: String : 2102 
+	Vch_StockRenwalDate	: Due Date 	 : 2103
+	
+[System: Formulae]
+	
+	locSalesman		: $$LocaleString:"Salesman Report"
+	
+[#Menu: Exception Reports]
+	
+	Option		: Accounts Info Salesman : yes ;  $IsGMSalemanRepOn:Company:##SVCurrentCompany
+	
+[!Menu: Accounts Info Salesman]
+	
+	Add	: Key Item: Before : @@locQuit: Salesman : S : Menu: CM Salesman
+	;Add: Item: Before: @@locQuit : Blank
+	
+[Menu: CM Salesman]
+	
+	Title		: $$LocaleString:"Salesman"
+	Indent		: @@locSalesman
+	Item		: Blank
+	Key Item    : @@locCreate			: C : Create  Collection    : List of Salesman       ;;: @Allowed AND $$Allow:Create:AccountsMasters
+    Key Item    : @@locDisplay      	: D : Display Collection    : List of Salesman		: $$NumLedgers > 0 AND $$Allow:Display:AccountsMasters
+    Key Item    : @@locAlter        		: A : Alter   Collection  	 : List of Salesman       : $$NumLedgers > 0 AND $$Allow:Alter:AccountsMasters
+  
+[Collection: List of Salesman]
+	
+	Use         : Alias Collection
+    Title       : $$LocaleString:"List of Salesman"
+    Type       : Cost Centre
+    Format   : $CstCatName
+    Filter      : CostCentreFilter
+    Report     : Salesman Cost Centre
+    Variable  : SCostCentre
+    Trigger    : SBCostCentre
+	Fetch		: ForPayroll	
+	Fetch		: Language Name, Category, CstCatName, ParentStructure, Parent
+	Compute		: NumChildren	: $$NumChildren	
+	Filter		: OnlyBranchesFilter
+	
+[System: Formulae]
+	
+	OnlyBranchesFilter	: $Parent = "Salesman"
+	
+[Report: SBCostCentre]
+
+	Use     : Collection Variable
+	Title	: $$LocaleString:"Select Salesman"
+	Local   : Line : Collection Variable : Field : SBCostCentre
+	Local   : Field: MV Title            : Info  : $$LocaleString:"Name of Salesman"
+
+	[Field: SBCostCentre]
+
+		Use         : Name Field
+		Table       : List of Salesman 
+		Show Table  : Always
+		Key         : Create Cost Centre
+		Modifies    : SCostCentre
+
+
+[Report: Salesman Cost Centre]
+	
+	Title		: "Salesman"
+	Use			: Cost Centre
+	
+[Form: Salesman Cost Centre]
+		Use			: Cost Centre
+		Local       : Field : MST CostCentreParent    	: Skip			: Yes
+	    Local		: Field	: MST CostCentreParent		: Set as		: "Salesman"
+
+;;;;;;;;;;;;;;;;;;; SALES VOUCHER ALTERATION FOR SALES MAN SELECTION ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+[#Part: STKI Units]
+
+	Add:    Lines       :  At End : MstStkAgent
+
+	[Line : MstStkAgent]
+		
+		Fields      : Short Prompt, MstStkAgent
+        Local       : Field : Short Prompt : Info : $$LocaleString:"Enable Sales Agent for this StockItem ?"
+		Local       : Field : Short Prompt : Width	: @@ShortNameWidth
+		Local       : Field : Short Prompt : Color	: Blue
+		Local       : Field : Short Prompt : Width: 20% page 
+		Space Top	: 0.5
+
+[Field : MstStkAgent]
+	
+	Use : Logical Field
+	Storage :MstStkAgentName
+	Show Table: Default
+	Set: No
+	
+[System : UDF]
+	
+	MstStkAgentName :  Logical : 11000
+	Vch_StockRenwalDateNew :  Date  : 11022
+	Vch_NewDateNum		:  Number  : 1023
+
+;=====================================================
+[Field: Vch_StockRenwalDateDis]
+	Field	: Number Field
+	Storage	: Vch_NewDateNum
+	Set as	: ""
+	Width	: 8
+	
+
+
+
+[Field: Vch_StockRenwalDate]
+	 Use        : Uni Date Field
+	Set Always 	: yes 
+	Storage		: Vch_StockRenwalDateNew
+	Set as	:  ##VARVchDate  ;;$$Get_Proj_CloseDate:($$Number:##VARVchDate):#Vch_StockRenwalDateDis
+	Set always	: Yes
+	Color		: blue 
+	Width		: 15
+;	Skip on		: Not $MstStkAgentName:StockItem:$StockItemName
+
+[System: Formula]
+	test		:  $$Date:##VARVchDate + $$Number:$Vch_NewDateNum
+	CalExpDate  :  $$Date:##VARVchDate  + $$Number:$Vch_StockRenwalDateNew
+
+	
+[Function	: Get_Proj_CloseDate]
+	
+	Parameter	: Proj_NoOfMnths	: Number
+	Parameter	: Proj_StartDate	: Date
+	
+	Variable	: Proj_StartDateVar1	: Date
+	Variable	: Proj_StartDateVar2	: Date
+	
+
+00	: Set		:  Proj_StartDateVar1	: ##Proj_StartDate
+01	: While	:  ##Proj_NoOfMnths>0
+02	: Set		: 	Proj_StartDateVar2	: $$NextMonth:##Proj_StartDateVar1
+03	: Set		:  Proj_StartDateVar1	: ##Proj_StartDateVar2
+04	: Decrement	: 	Proj_NoOfMnths
+05	: End While
+06	: Return	: ##Proj_StartDateVar2
+
+
+
+/*
+[Field	:	SID_CC_Period]
+	Use		:	name field
+	Storage	:	SID_CC_Period	
+	Style		:	Normal
+	Width		:	15% page
+	Border	: thin right
+	Align		:  Center
+	;Set as	:	$$Type
+	
+	
+[Field	:	SID_CC_Started]
+	Use		:	short date field
+	Storage	:	SID_CC_Started
+	Set as	:	""
+	Style		:	Normal
+	Width		:	15% page
+	Align		:  Center
+	Border	: thin right
+	;Set as	:	$$Type
+
+[Field	:	SID_CC_Closed]
+	Use		:	short date field
+	Storage	:	SID_CC_Closed
+	Set as	:  $$Get_Proj_CloseDate:($$Number:#Vch_StockRenwalDate):#Vch_StockRenwalDate
+	Style		:	Normal
+	Width		:	15% page
+	Align		:  Center
+	;Border	: thin right	
+	Set Always		: Yes
+	;Set as	:	$$Type
+
+/*
+
+[Field	:	SID_CC_Closed]
+	Use		:	short date field
+	Storage	:	SID_CC_Closed
+	Set as	:  $$Get_Proj_CloseDate:($$Number:#SID_CC_Period):#SID_CC_Started
+	Style		:	Normal
+	Width		:	15% page
+	Align		:  Center
+	;Border	: thin right	
+	Set Always		: Yes
+	;Set as	:	$$Type
+	
+[Function	: Get_Proj_CloseDate]
+	
+	Parameter	: Proj_NoOfMnths	: Number
+	Parameter	: Proj_StartDate	: Date
+	
+	Variable	: Proj_StartDateVar1	: Date
+	Variable	: Proj_StartDateVar2	: Date
+	
+
+00	: Set		:  Proj_StartDateVar1	: ##Proj_StartDate
+01	: While	:  ##Proj_NoOfMnths>0
+02	: Set		: 	Proj_StartDateVar2	: $$NextMonth:##Proj_StartDateVar1
+03	: Set		:  Proj_StartDateVar1	: ##Proj_StartDateVar2
+04	: Decrement	: 	Proj_NoOfMnths
+05	: End While
+06	: Return	: ##Proj_StartDateVar2
+
