@@ -1,0 +1,192 @@
+ ;sri
+ ;-----------------------------------------------------------------------------
+[#Part: VTYP Behaviour]
+ 
+	
+	Add	: Line	: At End	: SE PO Terms and Conditions
+
+
+	[Line: SE PO Terms and Conditions]
+		Invisible	: not (@@isSales or @@IsSalesOrder) ;NOt $$IsPurcOrder:$Parent
+		Field	: Long Prompt, SE PO Terms and Conditions
+		Local	:Field: Long Prompt: Set as: $$LocaleString:"Terms and conditions?"
+		Local	:Field: Long Prompt: Color:Blue 
+		
+		[Field			:SE PO Terms and Conditions]
+			
+			Use 		: Logical Field
+			Table		: YesNoTable
+			Storage  	: SEPOTermsandConditions
+			Show Table	: Always
+			Width		: 5% page
+			Align		: Left
+			Sub Form	: SE TermsNCond:$$Value=Yes
+	
+[Report		: SE TermsNCond]
+	
+	Title	: "Terms and Conditions"
+	Form	: SE TermsNCond
+	
+[Form:SE TermsNCond]
+	
+	Part		: 	Form Subtitle, SE TermsNCond
+	Local		:	Field:Form Subtitle	:	Set as	: $$LocaleString:"Terms and conditions"
+	Local		:	Field:Form Subtitle	:	Width	:40% Page
+	Local		:	Field:Form Subtitle	:	Align	:Center
+	FullWidth   : No
+	Height		: 80% Screen
+    Background  : White
+    SpaceRight  : 0.5
+    SpaceLeft   : 1.5
+    Option      : Small Size Form
+    Horizontal Alignment: Centre
+    Vertical Alignment  : Centre
+	
+[Part			: SE TermsNCond]
+	
+	Line		: SE TermsNCond
+	Repeat		: SE TermsNCond : SE TermsNCond Aggr
+	Scroll		: Vertical
+	 Break On	: $$IsEmpty:$SETermsNCond
+	
+	
+	[Line		: SE TermsNCond]
+		
+		Field	: SE TermsNCond
+		
+		[Field: SE TermsNCond]
+			
+			Use		: Name Field
+			Storage	: SETermsNCond
+			Width	: 80% page
+			Lines	: 0
+		
+
+[Collection	: SE PO Terms Coll]
+	
+	Type	: SETermsNCondAggr: Vouchertype
+	Child Of: ##SVvouchertype
+	Fetch	:  SETermsNCond
+	Format	: $SETermsNCond
+	
+
+[System: UDF]
+	
+	SE TermsNCond Aggr		: Aggregate	:5010
+	SETermsNCond			: String	:5012
+	SEPOTermsandConditions	: Logical	: 5013
+	SEPOTermsNCond			: Logical	: 5014
+	SEPOTermsCollAggr		: Aggregate	: 5015
+	SEPOTermsCondReport		: String	: 5016
+
+
+[#Part		: VCHNarration]
+	
+	Option	: POVCHNarration		: @@isSales or @@IsSalesOrder ;@@IsSales or $$IsPurcOrder:$VoucherTypeName
+	
+[!Part		: POVCHNarration]
+	
+	Add		: Line	: At Beginning	: SE PO TermsNCond
+	
+	[Line: SE PO TermsNCond]
+		
+		Field	: Medium Prompt,SE PO TermsNCond
+		
+		Local	: Field	: Medium Prompt	: Set as	: "Terms And Conditions"
+		
+
+		[Field			: SE PO TermsNCond]
+			
+			Use			: Logical Field
+			Storage		: SEPOTermsNCond
+			Table		: YesNoTable
+			Show Table	: Always
+			Sub Form	: SE PO TermsCond Report:$$Value=Yes
+	
+[Report		: SE PO TermsCond Report]	
+
+	Title	: "Terms and Conditions"
+	Form	: SE PO TermsCond Report
+	
+[Form:SE PO TermsCond Report]
+	
+	Part		: 	Form Subtitle, SE PO TermsCond Report
+	Local		:	Field:Form Subtitle	:	Set as	: $$LocaleString:"Terms and conditions"
+	Local		:	Field:Form Subtitle	:	Width	:40% Page
+	Local		:	Field:Form Subtitle	:	Align	:Center
+	FullWidth   : No
+	Height		: 80% Screen
+    Background  : White
+    SpaceRight  : 0.5
+    SpaceLeft   : 1.5
+    Option      : Small Size Form
+    Horizontal Alignment: Centre
+    Vertical Alignment  : Centre
+	
+[Part: SE PO TermsCond Report]
+	
+	Line		: SE PO TermsCond Report
+	Repeat		: SE PO TermsCond Report : SEPOTermsCollAggr
+	Scroll		: Vertical
+	 Break On	: $$IsEmpty:$SEPOTermsCondReport
+	 Set		: $$NumItems:SEPOTermsColl
+		
+	[Line		: SE PO TermsCond Report]
+		
+		Field	: SE PO TermsCond Report
+		
+		[Field		: SE PO TermsCond Report]
+ 
+			Use		: Name Field
+			Set as	: $$CollectionField:$SETermsNCond:$$Line:SEPOTermsColl 
+			Storage	: SEPOTermsCondReport
+			Width	: 50% Screen
+			Max		: 72
+			Lines	: 0
+			
+
+
+;-----------------------------------------------------------------------------------------------
+
+[Part		: POEXPINVTerms]
+	Local: Field: Default : Style: AR8
+	;Line	: EXPINV Terms Tit,
+	Line: EXPINVTermsVal
+	Repeat	: EXPINVTermsVal: SEPOTermsCollAggr  
+	Border	: Thin Box
+;	Border	: Thin Right 
+ 
+	[Line		: EXPINV Terms Tit]
+		
+		Field	: EXPINV Terms Tit
+		
+		[Field		: EXPINV Terms Tit]
+			
+			Use		: Name Field
+			Set as	: "Terms And Conditions"
+			Style	: Normal Bold
+		;	Width	: 37.3% Page
+			
+	[Line			: EXPINVTermsVal]
+		
+		Field		: EXPINVTermsVal
+		
+			[Field	:EXPINVTermsVal1]
+			
+			Use		: Name Field
+			Set as	: $$Line
+			Style	: Normal 
+			Width	: 2% Page
+
+			[Field	: EXPINVTermsVal]
+			
+			Use		: Name Field
+			Set as	: $SEPOTermsCondReport
+			Style	: Normal 
+			;Width: 32.0% page 
+			Full Width: yes 
+			Line	: 0
+		;	Local: Field: Name Field : Width	: if @@IsSaleOrder then 33.3% else 25.3% page
+
+
+

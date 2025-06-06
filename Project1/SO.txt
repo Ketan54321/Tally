@@ -1,0 +1,173 @@
+;; jai shree ram 
+
+[#Form: sales order color]
+	
+Option	: A4TSSalesColor  : (@@IsSales or @@IsSalesOrder) And $A4TSSalesVTYPCustOp:VoucherType:$VoucherTypeName = "Yes"
+
+/*
+[!Form	: A4TSSalesOrderColor1]
+	
+	Delete	: Print
+	Add		: Print	: A4TSSalesOrderColor	
+ 		
+[Report	: A4TSSalesOrderColor]
+	
+	Title	: $$LocaleString:"Proforma Invoice"
+	PrintSet    : Report Title      : $$LocaleString:"Proforma Invoice"
+	Delete	: Form
+	Use		: GST InvoiceAnalysis Report_Variables
+	Object	: Voucher
+	Add		: Form	: A4TSSalesOrderColor
+	
+[Form	: A4TSSalesOrderColor]
+	Print       : VCHPrintConfigure		;;; required 
+	Use     	: GST InvoiceAnalysis	
+	
+    Height      : 100% Page  
+    Width       : 100% Page
+    Space Top   : 3% Page
+    Space Right : 3% Page
+    Space Left  : 3% Page
+	Space Bottom: 3% Page	
+	Part		: A4TSalesOrderOpBreak, BSI_InvBody 
+	Parts: BIS_TaxTypeTitle, BIS_TaxTypeBody, BIS_Inwords, BIS_BankInfo
+	
+[Part	: A4TSalesOrderOpBreak]
+	
+;	Border	: Thin Box
+ 	Part	: BSI_TaxTitle,
+	Part	: BSI_CompLogo
+	Part	: BSI_BillToMainSO
+	Part	: BSI_BillToInfoSO
+	Part	: BSI_InvTitle
+	
+	Vertical:	Yes
+	
+;====================================================================
+			[Part : BSI_BillToMainSO]
+				Part: BSI_BillToTitleSO
+				Right Part:  BSI_InvInfoSO
+				
+				[Part: BSI_BillToTitleSO]
+					Print BG: Blue 
+					Border	: Thin box 
+					Width:  33.8% page 
+					
+					Line	: Vipa_BilltoTitleSO
+							
+							
+					[Line	: Vipa_BilltoTitleSO]
+						Space Top: 2 mms 
+						Space Bottom: 1 mms 
+						
+					;	Height: 1.5
+								Field: Name Field 
+								Local: 	Field: Name Field : Set as		: if @@Issales then "Bill To " else "Estimate For" 
+								Local : Field: Name Field : Style		: AR8B
+								Local : Field: Name Field : Width		: If @@IsSales then 33.3% Else 52% page
+								Local : Field: Name Field : Print BG	: Blue  
+								Local : Field: Name Field : Print FG	: White 
+
+
+				
+					[Part: BSI_InvInfoSO]
+									Print BG: Blue 
+									Border	: Thin box 
+									Width:  33.3% page 
+									Line	: BSI_InvInfo
+										
+						[Line	: BSI_InvInfoSO]
+							Space Top: 2 mms 
+							Space Bottom: 1 mms 
+									Field: Name Field 
+									Local: 	Field: Name Field : Set as		: if @@Issales then "Invoice Details" else "Estimate Details" 
+									Local : Field: Name Field : Style		: AR8B
+									Local : Field: Name Field : Width		: If @@IsSales then 33.3% Else 50% page
+									Local : Field: Name Field : Print BG	: Blue  
+									Local : Field: Name Field : Print FG	: White 
+									Local : Field: Name Field : Align		: Right
+
+
+;;;;;;;;;;;;;;;===========================================================
+	[Part : BSI_BillToInfoSO]
+				Part: BSI_BillToSO
+				Right Part:  BSI_Inv
+				
+				[Part: BSI_BillToSO]
+				 ;; Print BG: Blue 
+					Border	: Thin left
+					;;Width:  50% page 
+					
+					Line	: Vipa_BilltoNameSO
+					Line	: Vipa_BilltoAddSO
+					repeat 	: Vipa_BilltoAddSO  : Address
+					Line	: Vipa_BilltoContSO
+					Line	: Vipa_BilltoGSTSO
+					Line	: Vipa_BilltoStateSO
+					
+							
+					[Line	: Vipa_BilltoNameSO]
+						Space Top: 1 mms 
+						Space Bottom: 1 mms 
+						
+								Field: Name Field 
+								Local: 	Field: Name Field : Set as		: $PartyMailingName 
+								Local : Field: Name Field : Style		: AR8B
+								Local : Field: Name Field : Width		: If @@IsSales then 33.3% Else 50% page 
+									
+					[Line	: Vipa_BilltoAddSO]
+						Space Top: 1 mms 
+						Space Bottom: 1 mms 
+						
+								Field: Name Field 
+								Local: 	Field: Name Field : Set as		: $Address
+								Local : Field: Name Field : Style		: AR8
+								Local : Field: Name Field : Width		: If @@IsSales then 33.3% Else 50% page 
+							
+			[Line	: Vipa_BilltoContSO]
+						Space Top: 2 mms 
+						Space Bottom: 1 mms 
+								Field: Name Field 
+								Local: 	Field: Name Field : Set as		: "Ship To "
+								Local : Field: Name Field : Style		: AR8B
+								Local : Field: Name Field : Width		: If @@IsSales then 33.3% Else 50% page
+							
+					[Line	: Vipa_BilltoGSTSO]
+						Space Top: 1 mms 
+						Space Bottom: 1 mms 
+						
+								Field: Medium Prompt,Name Field 
+								Local: 	Field: Name Field : Set as		: $PartyGSTIN
+								Local : Field: Name Field : Style		: AR8
+								Local : Field: Name Field : Width		: 25.3% page 
+						
+								Field: Medium Prompt,
+								Local: 	Field: Medium Prompt : Set as		: "GSTIN : " 
+								Local : Field: Medium Prompt : Style		: AR8B
+								Local : Field: Medium Prompt : Width		: 8% page 			
+
+
+					[Line	: Vipa_BilltoStateSO]
+						Space Top: 1 mms 
+						Space Bottom: 1 mms 
+						
+								Field: Medium Prompt, Name Field 
+								Local: 	Field: Medium Prompt : Set as		: "State:"
+								Local : Field: Medium Prompt : Style		: AR8B
+								Local : Field: Medium Prompt : Width		: 8% page 
+								
+				Local   	: Field : Name Field 	: Local Formula : SaleStateName	: If NOT ($$IsEmpty:$ConsigneeStateName OR $$IsSysNameEqual:NotApplicable:$ConsigneeStateName) AND (@@IsICFGBuyerDetails AND (@@IsSales OR @@IsDelNote OR @@IsSalesOrder)) Then $ConsigneeStateName +
+																					  Else @@GSTConsigneeStateName
+				Local   	: Field : Name Field 	: Local Formula : StateName 	: If $$IsEmpty:@SaleStateName Then If NOT ($$IsEmpty:$StateName OR $$IsSysNameEqual:NotApplicable:$StateName) Then $StateName +
+																					  Else If $$IsEmpty:@@BuyerName Then "" Else $$GetPartyState:@@BuyerName Else @SaleStateName
+				Local   	: Field : Name Field 	: Set as    	: $StateName+ ", Code : " + $$getgststatecode:$StateName
+							
+				Local   	: Field : Name Field 	: Style     	: AR8B ;;If @@IsGSTTaxAnalysisWithItems Then "Tiny" Else "Normal"
+				Local   	: Field : Name Field 	: Cells     	: ($$Quotient:@@ExcelCellColumn:4)
+
+			
+	
+	
+;;;=================================================================	
+				
+		

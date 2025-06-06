@@ -1,0 +1,147 @@
+
+[Report:CMPUPIID]
+
+[Report:CMPACNo]
+
+[Form:CMPUPIID]
+Top Parts:CMPUPIID
+Background:@@SV_UNYELLOW
+Width:80 % Page
+
+[Form:CMPACNo]
+Top Parts:CMPACNo
+Width:80 % Page
+Local:Field : Default :Style : Small
+
+[#Part:CMP TallyShop F11]
+Add:Part : After : CMP TallyShopFeaturesTitle: CMPQCode
+
+[#Part:EXPSMP BankInfo]
+;Options:IsSaQRP : $CMPQCode:Company:##SVCurrentCompany
+
+[#Part:EXPINV LeftSign]
+;Options:IsSaQRP : $CMPQCode:Company:##SVCurrentCompany
+
+[Part:CMPQCode]
+Top Lines:CMPQCode,CMPQTYPe,CMParPPay
+
+[Part:CMPUPIID]
+Top Lines:CMPUPIID1,CMPUPIID2
+
+[Part:CMPACNo]
+Top Lines:CMPACNo,CMPIFSC,CMPINAME
+
+[!Part:IsSaQRP]
+;Add:Left Part: At End: QRP
+
+[Part:QRP]
+Top Lines:QRP
+Height:5
+Width: 10 
+QR Code:@FinalQR
+Local Formula:FinalQR  : (If $CMParPPay:Company:##SVCurrentCompany Then @QAC_WoAmt Else @QAC_WAmt)
+Local Formula:A1   : $CMPQACNo:Company:##SVCurrentCompany
+Local Formula:A2   : $CMPQIFSC:Company:##SVCurrentCompany
+Local Formula:QAC_WAmt : If $CMPQTYPe:Company:##SVCurrentCompany = "UID" Then "upi://pay?pa="+ $CMPUPIID1:Company:##SVCurrentCompany + "&pn="+ $CMPUPIID2:Company:##SVCurrentCompany + "&mc=&tr=&tn=Invoice No." + $VoucherNumber + "&am="+$$String:$Amount:"NoComma" +"&cu=INR&url=&mode=&purpose=00" Else @ACNO
+Local Formula:QAC_WoAmt : If $CMPQTYPe:Company:##SVCurrentCompany = "UID" Then "upi://pay?pa="+ $CMPUPIID1:Company:##SVCurrentCompany + "&pn="+ $CMPUPIID2:Company:##SVCurrentCompany + "&mc=&tr=&tn=Invoice No." + $VoucherNumber + "&am=&cu=INR&url=&mode=&purpose=00" Else @ACNO
+Local Formula:ACNO  : If $CMParPPay:Company:##SVCurrentCompany Then @ACNO_WoAmt Else @ACNO_WAmt
+Local Formula:ACNO_WAmt : "upi://pay?pa=" + @A1 +"@"+@A2 + ".ifsc.npci&pn="+($CMPINAME:Company:##SVCurrentCompany)+ "-No."+ $VoucherNumber+"&am=" +($$String:$Amount:"NoComma")+"&cu=INR"
+Local Formula:ACNO_WoAmt : "upi://pay?pa=" + @A1 +"@"+@A2 + ".ifsc.npci&pn="+($CMPINAME:Company:##SVCurrentCompany)+ "-No."+ $VoucherNumber+"&am=&cu=INR"
+
+[#Line:EXPINV BankTitle]
+Space Top:2
+
+[Line:CMPQCode]
+Left Fields:Long Prompt,CMPQCode
+Local:Field : Long Prompt : Set As : "Enable QR for Invoice ?"
+Local:Field : Default :Style : Small
+Local:Field : Long Prompt : Width  : 35
+
+[Line:CMParPPay]
+Left Fields:Long Prompt,CMParPPay
+Local:Field : Long Prompt : Set As : "Allow partial Payment (Without Amount) ?"
+Local:Field : Long Prompt : Width   : 35
+Local:Field : Long Prompt : Indent : 2
+Local:Field : Default  : Inactive : Not $CMPQCode
+Local:Field : Default :Style : Small
+
+[Line:CMPQTYPe]
+Left Fields:Long Prompt,CMPQTYPe
+Local:Field : Long Prompt : Set As  : "Payment Using :"
+Local:Field : Long Prompt : Width   : 35
+Local:Field : Long Prompt : Indent : 2
+Local:Field : Default  : Inactive : Not $CMPQCode
+Local:Field : Default :Style : Small
+
+[Line:CMPUPIID1]
+Left Fields:Short Prompt, Name Field
+Local:Field : Short Prompt  : Set as : "UPI ID :"
+Local:Field : Name Field : Storage : CMPUPIID1
+Local:Field : Name Field : Case  : Normal
+Local:Field : Name Field : Max  : 500
+Local:Field : Name Field : Full Width: Yes
+
+[Line:CMPUPIID2]
+Left Fields:Short Prompt, Name Field
+Local:Field : Short Prompt  : Set as : "NAME :"
+Local:Field : Name Field : Storage : CMPUPIID2
+Local:Field : Name Field : Case  : Normal
+Local:Field : Name Field : Max  : 500
+Local:Field : Name Field : Full Width: Yes
+
+[Line:CMPACNo]
+Left Fields:Short Prompt,Name Field
+Local:Field : Short Prompt  : Set as : "A/c No.:"
+Local:Field : Name Field : Storage : CMPQACNo
+Local:Field : Name Field : FullWidth : Yes
+Local:Field : Name Field : Max  : 100
+
+[Line:CMPIFSC]
+Left Fields:Short Prompt,Name Field
+Local:Field : Short Prompt  : Set as : "IFSC :"
+Local:Field : Name Field : Storage : CMPQIFSC
+Local:Field : Name Field : FullWidth : Yes
+Local:Field : Name Field : Max  : 100
+
+[Line:CMPINAME]
+Left Fields:Short Prompt,Name Field
+Local:Field : Short Prompt  : Set as : "NAME :"
+Local:Field : Name Field : Storage : CMPINAME
+Local:Field : Name Field : FullWidth : Yes
+Local:Field : Name Field : Max  : 100
+
+[Line:QRP]
+Left Fields:Name Field
+Local:Field: Name Field : Set AS: $CMPQACNo:Company:##SVCurrentCompany
+
+[Field:CMPQCode]
+Use:Logical Field
+Storage:CMPQCode
+
+[Field:CMParPPay]
+Use:Logical Field
+Storage:CMParPPay
+
+[Field:CMPQTYPe]
+Use:Name Field
+Storage:CMPQTYPe
+Sub Forms:CMPUPIID  : $$Value = "UID"
+Sub Forms:CMPACNo  : $$Value = "A/c"
+Table:CMPQTYPe
+Show Table:Always
+
+[Collection:CMPQTYPe]
+Title:"QR for"
+List:"UID","A/c"
+Format:$Name,12
+
+[System:Udf]
+	
+CMPQCode	:Logical : 23201
+CMParPPay	:Logical : 23206
+CMPQTYPe	:String : 23202
+CMPUPIID1	:String : 25210
+CMPUPIID2	:String : 25220
+CMPINAME	:String : 23205
+CMPQACNo	:String : 23203
+CMPQIFSC	:String : 23204

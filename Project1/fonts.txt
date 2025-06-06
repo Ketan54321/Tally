@@ -1,0 +1,170 @@
+[Color:BlueBanglore] 
+RGB: 0, 128, 255
+  ;  RGB  : 51, 102, 255
+ ;RGB  : 77, 121, 255
+
+[Style: AR14]
+	Font    : "Calibri"
+    Height  : 14
+	
+
+[Style: AR14B]
+	Font    : "Calibri"
+    Height  : 14
+	Bold	: yes 
+	
+
+[Style: AR12]
+	Font    : "Calibri"
+    Height  : 12
+	
+		
+[Style: AR12B]
+	Font    : "Calibri"
+    Height  : 12
+	Bold    : Yes
+	
+
+[Style: AR10]
+	Font    : "Calibri"
+    Height  : 10
+	
+		
+[Style: AR10B]
+	Font    : "Calibri"
+    Height  : 10
+	Bold    : Yes
+	
+
+[Style: AR9]
+	Font    : "Calibri"
+    Height  :9
+
+[Style: AR9B]
+	Font    : "Calibri"
+    Height  : 9
+	Bold    : Yes
+
+
+
+[Style: AR8]
+	Font    : "Calibri"
+    Height  : 8
+
+[Style: AR8I]
+	Font    : "Calibri"
+    Height  : 8
+	Italic	: yes 
+
+[Style: AR7]
+	Font    : "Calibri"
+    Height  : 7
+	
+[Style: AR7B]
+	Font    : "Calibri"
+    Height  : 7
+	Bold	: yes 
+	
+[Style: AR7BI]
+	Font    : "Calibri"
+    Height  : 7
+	;Bold	: yes 
+	Italic: yes 
+	
+
+
+[Style: AR8B]
+	Font    : "Calibri"
+    Height  : 8
+	Bold    : Yes
+
+[Style: ARCmp]
+	Font    : "Calibri"
+    Height  : 18
+	Bold    : Yes
+	
+
+[Style: AR6B]
+	Font    : "Calibri"
+    Height  : 6
+	Bold    : Yes
+	
+[Style: AR6]
+	Font    : "Calibri"
+    Height  : 6
+
+
+;========================================================
+
+[#Line	: EI InvInfo]
+	Option	: Sales EI InvInfo	: $$IsSales:$VoucherTypeName or $$IsSalesOrder:$VoucherTypeName 
+	
+	[!Line	:Sales EI InvInfo]
+		Add	: Right Fields	: before	:  VCH ActualQty : VchDrwNo, VchMonthlyPay
+		Add:  Left Fields: before : VCH StockItem: VchStockCnt
+		Local: Field: VCH StockItem : Width: 35% page 
+
+[#Line	: CI InvInfo]
+	Option	: Sales CI InvInfo	: $$IsSales:$VoucherTypeName 
+	
+	[!Line	:Sales CI InvInfo]
+		Add	: Right Fields	: before	: VCHActualQty : VchDrwNo, VchMonthlyPay 
+		
+		Add:  Left Fields: before : VCH StockItem: VchStockCnt
+		Local: Field: VCH StockItem : Width: 35% page 
+
+[#Line	: EI ColumnOne]
+	Option	: Sales EI ColumnOne	: $$IsSales:$VoucherTypeName or $$IsSalesOrder:$VoucherTypeName 
+	
+	[!Line	: Sales EI ColumnOne]
+		Add	: Right Fields	: before	: VCH QtyTitle : VchDrwNo,VchMonthlyPay
+		
+		Add:  Left Fields: before : VCH ItemTitle: VchStockCnt
+		
+	Local	: Field: VchStockCnt : Info		: "No."
+	Local	: Field: VchStockCnt : Skip on	: yes 
+	Local	: Field: VchStockCnt : Style	: Normal Bold 
+	
+	Local	: Field: VchMonthlyPay : Info	: "Finish"
+	Local	: Field: VchMonthlyPay : Style	: Normal Bold 
+		
+	Local				: Field		: VchMonthlyPay			: Delete: Storage
+	Local				: Field		: VchMonthlyPay			: Type	: String
+	
+
+	Local	: Field: VchDrwNo : Info	: "Drawing No."
+	Local	: Field: VchDrwNo : Style	: Normal Bold 
+		
+
+
+[Field: VchStockCnt]
+	Set as: $$Line
+	Width: 2% page
+	Color	: Blue 
+	Style	: Normal Bold 
+	Set Always: Yes
+	Skip	: Yes
+
+
+[Field: VchMonthlyPay]
+;		color		: blue
+	Use         : Name Field
+    Width       : @@VCHDiscountWidth + 5
+    Align       : Center
+    Style       : Normal Bold
+    Storage     : VchInvFinish
+    Set always  : Yes
+	
+[Field: VchDrwNo]
+	Use         : Name Field
+    Width       : @@VCHDiscountWidth + 5
+    Align       : Center
+    Style       : Normal Bold
+    Storage     : VchDrwNo
+    Set always  : Yes
+
+	
+
+[System: udf]
+	VchInvFinish : String: 9123
+	VchDrwNo	 : String: 9124			

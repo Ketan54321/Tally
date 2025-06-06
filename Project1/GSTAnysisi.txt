@@ -1,0 +1,58 @@
+
+
+
+[Part: VCH GST AnalysisDetailsnew]
+
+	 Line            : VCHGSTInvPrintTitle1, VCHGSTInvPrintTitle2,
+	Line: GST VCHGSTInvPrintBody, GST VCHGSTInvPrintTotal
+	Repeat			: GST VCHGSTInvPrintBody	 : GSTAnalysisPrintSummary
+	Horizontal Align: Right
+	Border			: Thin Box
+	Total			: VCHGSTInvPrint TaxValue, VCHGSTInvPrint IGSTAmt, VCHGSTInvPrint CGSTAmt,VCHGSTInvPrint SGSTAmt, VCHGSTInvPrint CessAmt, VCHGSTInvPrint CessQtyAmt  
+	Total           : VCHGSTInvPrint TotalTaxAmt
+
+	Invisible		: If @@IsGSTOnAppl AND @@IsGSTSupportedVchs Then (@@IsGSTInvoiceEmptyCollection OR NOT @@InvGSTAnalysis) Else Yes
+	Common Border   : Yes
+
+;	Option          : VCH GST AnalysisDetailsSmallSizePart	: NOT @@IsGSTTaxAnalysisWithItems
+;	Option			: VCH GST Analysis BottomLine			: @@IsPaymentReqQRCodeAppl
+;	Option			: VCH GST AnalysisDetails Width			: NOT (@@IsGSTAnalysisPrintNotAppl OR NOT @@IsPaymentReqQRCodeAppl)
+
+
+	[#Line: GST VCHGSTInvPrintBody]
+	
+		delete : Field		: VCHGSTInvPrint HSNCode
+		
+
+[#Line:VCHGSTInvPrintTitle1]
+		
+        Use		: VCHGSTInvPrintTitle2
+		Delete	: Right Fields	: VCHGSTInvPrint IGSTRate, VCHGSTInvPrint CGSTRate, VCHGSTInvPrint SGSTRate, VCHGSTInvPrint CessRate, VCHGSTInvPrint CessQtyAmt	
+                
+        Delete  : Border
+          
+        Local	: Field	: Default					: Border	: Thin Left 
+        Local   : Field : Default                   : Pre Printed Border    : Yes        
+;  delete:   Local	: Field	: VCHGSTInvPrint HSNCode	: Delete    : Border
+;  delete:	Local	: Field	: VCHGSTInvPrint HSNCode	: Set As	: If NOT @@InvGSTHSNWiseAnalysis Then "" Else $$LocaleString:"HSN/SAC"
+	 
+
+	[#Line: GST VCHGSTInvPrintBody]
+	
+		Field		: VCHGSTInvPrint HSNCode
+	 
+	 delete: Right Fields: VCHGSTInvPrint HSNCode
+	 
+	[#Line:VCHGSTInvPrintTitle2]
+		 delete: Right Fields: VCHGSTInvPrint HSNCode
+		 
+	[#Line: GST VCHGSTInvPrintTotal]
+			delete: Right Fields: VCHGSTInvPrint HSNCode
+;		Use		: GST VCHGSTInvPrintBody
+;		Border	: Thick Top
+;		Local	: Field	: Default					: Type	    : String
+;		Local	: Field	: Default					: Style	    : If @@IsGSTTaxAnalysisWithItems Then "Tiny Bold" Else "Normal Bold"
+;		Local	: Field	: Default					: Skip	    : Yes
+;		Local	: Field	: DEfault					: Align	    : Right
+;		Local	: Field	: Default					: Set as    : ""
+;		Local	: Field	: VCHGSTInvPrint HSNCode	

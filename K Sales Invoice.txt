@@ -1,0 +1,487 @@
+[#Form: Sales color]
+    
+    Delete      : Print 
+    Add         : Print  : SC_Print
+    
+[Report: SC_Print]
+    
+    Use         : Printed Invoice
+    Delete      : Form
+    Add         : Form        : SC_Print
+    
+    
+[Form: SC_Print]
+    
+    Part        : Part1 , Part2 , Part3 , Part4 , Tot
+    Width       : @@InvWidth Inch
+    Height      : @@InvHeight Inch
+    Space Left  : @@Invspace Inch
+    Space Right : 0.25 inch
+    Space Top   : @@InvSpace Inch
+    Space Bottom: 0.25 Inch
+    
+[Part: Part1]
+    
+    Line        : SC_company_Name , SC_Address , SC_PhoneNo , SC_Email , SC_Website
+    Common Border: Yes
+    Border      : Thin Box
+    
+    [Line: SC_company_Name]
+        
+        Field       : SC_company_Name
+        
+        [Field: SC_company_Name]
+            
+            Use         : Name Title Field          
+            Set as      : "Comapny Name"
+            Align       : Center
+            Width       : 100% page
+            Style       : Normal
+      
+     
+    [Line: SC_Address]
+        
+        Field       : Short prompt  , SC_Address
+        Local       : Field     : Short prompt    : Info  : "Address"
+        Local       : Field     : Short prompt    : Align : Right
+        
+        [Field: SC_Address]
+            
+            Use         : Name Field 
+            Set as      : ""
+            Align       : Center
+            Width       : 50% page
+            Style       : Normal
+      
+  
+     [Line: SC_PhoneNo]
+        
+        Field       : Short prompt , SC_PhoneNo
+        Local       : Field     : Short prompt    : Info  : "Phone No"
+        Local       : Field     : Short prompt    : Align : Right
+        
+        [Field: SC_PhoneNo]
+            
+            Use         : Number field
+            Set as      : ""
+            Type        : Number
+            Align       : Center
+            Width       : 50% page
+            Style       : Normal
+            Format      : "No Zero"
+      
+
+    [Line: SC_Email]
+        
+        Field       : Short prompt  , SC_Email
+        Local       : Field     : Short prompt    : Info  : "Email"
+        Local       : Field     : Short prompt    : Align : Right
+        
+        [Field: SC_Email]
+           
+            Use         : Name field
+            Set as      : ""
+            Align       : Center
+            Width       : 50% page
+            Style       : Normal
+      
+  
+     [Line: SC_Website]
+        
+        Field       : Short prompt  , SC_Website
+        Local       : Field     : Short prompt    : Info  : "Website"
+        Local       : Field     : Short prompt    : Align : Right
+        
+        [Field: SC_Website]
+            
+            Use         : Name field
+            Set as      : ""
+            Align       : Center
+            Width       : 50% page
+            Style       : Normal
+
+ 
+[Part: Part2]
+    
+   Left Part        : Part2.1 
+   Right Part       : Part2.2
+   Common Border    : Yes
+    
+[Part: part2.1]
+    
+    Line        : SC_BillTo , SC_Name , SC_Addre , SC_State , SC_GST_No
+    Border      : Thin Box
+    
+    [Line: SC_BillTo]
+        
+        Field       : SC_BillTo
+        Local       : Field     : SC_BillTo : Info  : "Billed To"
+        
+             
+         [Field: SC_BillTo]
+            
+            Use     : Name Field
+            Set as  : ""
+            Align   : Center   
+            Width   : 50% page
+            
+       
+    [Line: SC_Name]
+        
+        Field       : Short prompt  , SC_Name
+        Local       : Field     : Short prompt  : Info  : "Name" 
+        
+         [Field: SSC_Name]
+            
+            Use     : Name Field
+            Set as  : ""
+            Align   : Left
+            Width   : 50% page
+        
+    [Line: SC_Addre]
+        
+        Field       : Short prompt  , SC_Addre
+        Local       : Field     : Short prompt  : Info  : "Address" 
+        
+         [Field: SSC_Addre]
+            
+            Use     : Name Field
+            Set as  : ""
+            Align   : Left
+            Width   : 50% page
+        
+    [Line: SC_State]
+        
+        Field       : Short prompt  , SC_State
+        Local       : Field     : Short prompt  : Info  : "State" 
+        
+         [Field: SSC_State]
+            
+            Use     : Name Field
+            Set as  : ""
+            Align   : Left
+            Width   : 50% page
+        
+    [Line: SC_GST_No]
+        
+        Field       : Short prompt  , SC_GST_No
+        Local       : Field     : Short prompt  : Info  : "GST No" 
+        
+         [Field: SSC_GST_No]
+            
+            Use     : Name Field
+            Set as  : ""
+            Align   : Left
+            Width   : 50% page
+
+
+            
+[Part: part2.2]
+    
+    Line        : SSC_ShipedTo , SSC_Name , SSC_Addre , SSC_State , SSC_GST_No
+    Border      : Thin Box
+    
+    [Line: SSC_ShipedTo]
+        
+        Field       : SSC_ShipedTo
+        Local       : Field     : SSC_ShipedTo  : Info  : "Shiped To" 
+        
+        [Field: SSC_ShipedTo]
+            
+            Use     : Name Field
+            Set as  : ""
+            Align   : Center
+            Width   : 50% page
+            
+    [Line: SSC_Name]
+        
+        Field       : Short prompt  , SSC_Name
+        Local       : Field     : Short prompt  : Info  : "Name" 
+        
+         [Field: SC_Name]
+            
+            Use     : Name Field
+            Set as  : ""
+            Align   : Left
+            Width   : 50% page
+        
+    [Line: SSC_Addre]
+        
+        Field       : Short prompt  , SSC_Addre
+        Local       : Field     : Short prompt  : Info  : "Address" 
+        
+         [Field: SC_Addre]
+            
+            Use     : Name Field
+            Set as  : ""
+            Align   : Left
+            Width   : 50% page
+        
+    [Line: SSC_State]
+        
+        Field       : Short prompt  , SSC_State
+        Local       : Field     : Short prompt  : Info  : "State" 
+        
+         [Field: SC_State]
+            
+            Use     : Name Field
+            Set as  : ""
+            Align   : Left
+            Width   : 50% page
+        
+    [Line: SSC_GST_No]
+        
+        Field       : Short prompt  , SSC_GST_No
+        Local       : Field     : Short prompt : Info  : "GST No" 
+        
+         [Field: SC_GST_No]
+            
+            Use     : Name Field
+            Set as  : ""
+            Align   : Left
+            Width   : 50% page
+            Space Left: 10% page
+            
+
+[Part: Part3]
+    Border      : thin box
+    Parts       : Inv , PO
+    
+[Part: Inv]
+    Line        : InvNo , InvDate
+    [Line: InvNo]
+        Field   : Short prompt  , InvNo
+        Local   : Field : Short prompt : Set as : "Inv No"
+        [Field: InvNo]
+            Set as: ""
+            Width   : 50% page
+            
+    [Line: InvDate]
+        Field   : Short prompt  , InvDate
+        Local   : Field : Short prompt : Set as : "Inv Date"
+        [Field: InvDate]
+            Set as: ""
+            Width   : 50% page
+            
+[Part: PO]
+    Line        : PONo , PODate
+    [Line: PONo]
+        Field   : Short prompt  , PONo
+        Local   : Field : Short prompt : Set as : "PO No"
+        [Field: PONo]
+            Set as: ""
+            
+    [Line: PODate]
+        Field   : Short prompt  , PODate
+        Local   : Field : Short prompt : Set as : "PO Date"
+        [Field: PODate]
+            Set as: ""
+            
+
+
+;///////////////////////////////////////////////////////////////////
+
+[Part	:	Part4]
+	Line			:	SI_TItle	,	SI_Des  
+	Common Border	:	Yes
+    Total           :   SI_Qty , T_Rate	,	T_Amount
+    Border          :   Thin Box
+	
+;****************************   TITLE    ********************************
+	
+[Line	:	SI_TItle]
+	Field	:	ST_No	,	Stock_T_Name	, T_HSN Code , SI_Qty , T_Rate	,	T_Amount
+    Border  :   Thin Bottom
+    
+	
+	[Field	:	ST_No]
+		Use		:	Title	
+		Info	:	SI NO
+		Width	:	10
+        Border  :    Thin Right
+				
+	[Field	:	Stock_T_Name]
+		Use		:	Title	
+		Info	:	StockItem
+		Width	:	25
+        Border  :    Thin Right
+				
+	[Field	:	TGroup]
+		Use		:	Title	
+		Info	:	Group
+		Width	:	20
+        Border  :    Thin Right
+				
+	[Field	:	SI_Qty]
+		Use		:	Title	
+		Info	:	Qty
+		Width	:	20
+        Border  :    Thin Right
+				
+	[Field	:	T_HSN Code]
+		Use		:	Title	
+		Info	:	HSN Code
+		Width	:	20
+        Border  :    Thin Right
+				
+	[Field	:	T_IGST_rate]
+		Use		:	Title	
+		Info	:	IGST
+		Width	:	10
+        Border  :    Thin Right
+				
+	[Field	:	T_CGST_Rate]
+		Use		:	Title	
+		Info	:	CGST
+		Width	:	10
+        Border  :    Thin Right
+				
+	[Field	:	T_SGST_Rate]
+		Use		:	Title	
+		Info	:	SGST
+		Width	:	10
+        Border  :    Thin Right
+				
+	[Field	:	T_Opening Balance]
+		Use		:	Title	
+		Info	:	Opening Balance
+		Width	:	20
+        Border  :    Thin Right
+				
+	[Field	:	T_Rate]
+		Use		:	Title	
+		Info	:	Rate
+		Width	:	20
+        Border  :    Thin Right
+    
+				
+	[Field	:	T_Amount]
+		Use		:	Title	
+		Info	:	Amount
+		Width	:	20
+				
+
+;********************    Details    *********************
+
+[Line	:	SI_Des]
+	Field	:	SI_No	,	Stock_Item_Name	, HSN Code	, S_Qty  , CGST_Rate	,	Amount
+    
+	
+	[Field	:	SI_No]
+		Use		:	Details	
+		Set as	:	""
+		Width	:	10
+		Type	:	Number
+        Border  :    Thin Right	
+        Format  :   "NO Zero"
+		
+	[Field	:	Stock_Item_Name]
+		Use		:	Details	
+		Set as	:	""
+		Width	:	25
+        Border  :    Thin Right
+		
+	[Field	:	Group]
+		Use		:	Details	
+		Set as	:	""
+		Width	:	20
+        Border  :    Thin Right
+		
+	[Field	:	S_Qty]
+		Use		:	Details	
+		Set as	:	""
+		Width	:	20
+        Border  :    Thin Right
+		
+	[Field	:	HSN Code]
+		Use		:	Details	
+		Set as	:	""
+		Width	:	20
+        Border  :    Thin Right
+		
+	[Field	:	IGST_rate]
+		Use		:	Details	
+		Set as	:	""
+		Width	:	10
+        Border  :    Thin Right
+		
+	[Field	:	CGST_Rate]
+		Use		:	Details	
+		Set as	:	""
+		Width	:	10
+        
+		
+	[Field	:	SGST_Rate]
+		Use		:	Details	
+		Set as	:	""
+		Width	:	10
+        Border  :    Thin Right
+		
+	[Field	:	Opening Balance]
+		Use		:	Details	
+		Set as	:	""
+		Width	:	20
+        Border  :    Thin Right
+		
+	[Field	:	Rate]
+		Use		:	Details	
+		Set as	:	""
+		Width	:	20
+        Border  :    Thin Right
+		
+	[Field	:	Amount]
+		Use		:	Details	
+		Set as	:	""
+		Width	:	20		
+
+
+
+
+
+
+
+
+
+[Part: Tot]
+    Line        : SI_Total
+    Border      : Thin Box
+
+
+[Line	:	SI_Total]
+	Field	:	ST_No_T	,	Stock_T_Name_T	, T_HSN Code_T , SI_Qty_T , T_Rate_T	,	T_Amount_T
+   
+	
+	[Field	:	ST_No_T]
+		Use		:	Title	
+		Info	:	""
+		Width	:	10
+        
+				
+	[Field	:	Stock_T_Name_T]
+		Use		:	Title	
+		Info	:	Total
+		Width	:	25
+
+	
+	[Field	:	SI_Qty_T]
+		Use		:	Title	
+		Info	:	$$Total:SI_Qty
+		Width	:	20
+        Border  :    Thin Right
+				
+	[Field	:	T_HSN Code_T]
+		Use		:	Title	
+		Info	:	""
+		Width	:	20
+		Border  :    Thin Right	
+				
+	[Field	:	T_Rate_T]
+		Use		:	Title	
+		Info	:	$$Total:T_Rate
+		Width	:	20
+        Border  :    Thin Right
+				
+	[Field	:	T_Amount_T]
+		Use		:	Title	
+		Set as	:	$$Total:T_Amount
+		Width	:	20
